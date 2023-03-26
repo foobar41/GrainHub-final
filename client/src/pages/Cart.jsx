@@ -1,4 +1,5 @@
 import { Add, Remove } from "@material-ui/icons";
+import DeleteIcon from "@material-ui/icons/Delete";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
@@ -163,7 +164,10 @@ const ProductPrice = styled.div`
 `;
 
 const RemoveProduct = styled.div`
-  margin-left: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 60px 20px 20px;
   cursor: pointer;
 `;
 
@@ -327,7 +331,7 @@ const Cart = () => {
                   </ProductPrice>
                 </PriceDetail>
                 <RemoveProduct>
-                  <Remove onClick={() => handleDelProduct(product)} />
+                  <DeleteIcon onClick={() => handleDelProduct(product)} />
                 </RemoveProduct>
               </Product>
             ))}
