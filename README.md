@@ -27,24 +27,25 @@ updating these products on the website.
 
 The below steps show how to get started with the code running!.
 
-★ Download git from the link:
+- Download git from the link:
 https://git-scm.com/downloads.
 
-★ Download node and npm from link
+- Download node and npm from link
 https://nodejs.org/en/.
 
-★ After that in the terminal type ```pip install npm```.
+- After that in the terminal type ```pip install npm```.
+- Make sure you install version 16.14.0 for dependency issues.
 
-★ Open the command prompt and run the command: 
+- Open the command prompt and run the command: 
 ```git clone https://github.com/foobar41/Grainhub-final```
 
-★ We must now create two .env files in /client/ and /api/ folders.
+- We must now create two .env files in /client/ and /api/ folders.
   
-★ In the client .env file:
+- In the client .env file:
 
 - Create an environment variable "REACT_APP_STRIPE" and assign it your stripe account url for successful completion of payments.
 
-★ In the api .env file:
+## In the api .env file:
 
 - Create different variables with names as shown below 
 
@@ -53,25 +54,25 @@ https://nodejs.org/en/.
   - JWT_SEC = This will be used for initialization of JWT Token and can be named anything as per convenience.
   - STRIPE_KEY = Here, the url of the stripe key must be provided.
 
-★ Now, we have to install several dependencies.
+## Now, we have to install several dependencies.
 
 - Change the directory to client Folder and enter the command ```yarn``` in the command line.
 - Then, open another terminal and cd to the Admin Folder and enter the command ```yarn``` in the command line.
 - Repeat this process for Volunteer and then API folder as well in different terminals and enter the command ```yarn``` in the command lines.
 
-★ Finally to run the servers, use the following command
+- Finally to run the servers, use the following command
 in all the terminals: ```yarn start```
 
-★ Then, the terminal will prompt to open different URL's or else
+## Then, the terminal will prompt to open different URL's or else
 enter the following URL's in your broweser for differenet pages.
 - Enter http://localhost:3000/ for the frontend page (Client).
 - Enter http://localhost:3001/ for the Admin Page.
 
 The API will run in the http://localhost:5000/ for the backend part and connceting to the MongoDB database.
 
-★ After performing all the steps in correct order, the web application will start running smoothly. 
+- After performing all the steps in correct order, the web application will start running smoothly. 
 
-## Group Members
+# Group Members
 
 <pre>
 Akhil G S V N S           - S20190010010
