@@ -121,17 +121,16 @@ const ProductTile = ({ item }) => {
     getProduct();
   }, [id]);
 
-  const handleQuantity = (type) => {
-    if (type === "dec") {
-      quantity > 1 && setQuantity(quantity - 1);
-    } else {
-      setQuantity(quantity + 1);
-    }
-  };
+  // const handleQuantity = (type) => {
+  //   if (type === "dec") {
+  //     quantity > 1 && setQuantity(quantity - 1);
+  //   } else {
+  //     setQuantity(quantity + 1);
+  //   }
+  // };
 
   const handleClick = () => {
     alert('Product Added to Cart')
-    console.log(product)
     dispatch(
       addProduct({ ...product, id, quantity, color, size })
     );

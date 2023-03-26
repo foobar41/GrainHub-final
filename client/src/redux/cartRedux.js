@@ -10,12 +10,16 @@ const cartSlice = createSlice({
   },
   reducers: {
     addProduct: (state, action) => {
-      // const list = state.cart.foreach(product => console.log(product));
-      // console.log(action);
-      
-      state.quantity += 1;
-      state.products.push(action.payload);
+      const existingProduct = state.products.find((product) => product.name === action.payload.name);
+      if (existingProduct) {
+        existingProduct.quantity += action.payload.quantity
+      } else {
+        state.products.push(action.payload);
+      }
+      state.quantity = state.products.length;
       state.total += action.payload.price * action.payload.quantity;
+
+      console.log(state.products.length)
     },
     delCart: (state) => {
       state.quantity = 0;

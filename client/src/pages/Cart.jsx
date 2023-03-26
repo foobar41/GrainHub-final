@@ -1,4 +1,4 @@
-// import { Add, Remove } from "@material-ui/icons";
+import { Add, Remove } from "@material-ui/icons";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
@@ -7,7 +7,7 @@ import Navbar from "../components/Navbar";
 // import { mobile } from "../responsive";
 import StripeCheckout from "react-stripe-checkout";
 import { useEffect, useState } from "react";
-import { publicRequest,userRequest } from "../requestMethods";
+import { publicRequest, userRequest } from "../requestMethods";
 import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
 import { clearCart } from "../redux/apiCalls";
@@ -201,19 +201,19 @@ const Cart = () => {
   };
 
   useEffect(() => {
-    
     const makeRequest2 = async () => {
       try {
         const res2 = await userRequest.post("/orders", {
           products: cart.products,
           userId: currentUser._id,
           // tokenId: stripeToken.id,
-          address: stripeToken.card.address_line1+ " " + stripeToken.card.address_city + " " + stripeToken.card.address_zip,
-          amount: (cart.total+25),
+          address: stripeToken.card.address_line1 + " " + stripeToken.card.address_city + " " + stripeToken.card.address_zip,
+          amount: (cart.total + 25),
         });
         history.push("/success/" + res2.data._id, {
           stripeData: res2.data,
-          products: cart, });
+          products: cart,
+        });
         setOrderId(res2);
         console.log(res2.data._id);
         console.log(stripeToken.card);
@@ -224,29 +224,39 @@ const Cart = () => {
       try {
         const res = await userRequest.post("http://localhost:5000/api/checkout/payment", {
           tokenId: stripeToken.id,
-          amount: (cart.total-5) * 100,
+          amount: (cart.total - 5) * 100,
         });
       } catch {
         console.log("error here 2");
       }
       clearCart(dispatch);
     };
-    
+
     // const makeRequest = async () => {
-      
+
     // };
     // const dCart = async () => {
     //   // const res = await makeRequest2();
     //   // const res2 = await makeRequest();
     //   clearCart(dispatch);
-      
+
     // };
-    stripeToken && makeRequest2(); 
+    stripeToken && makeRequest2();
     // makeRequest();
     console.log(cart);
     // dCart();
     // currentUser.cart.quantity = 0;
   }, [cart, stripeToken, cart.total, history]);
+
+  const handleQuantity = (type, prod) => {
+    const qty = prod.quantity
+    if (type === "dec") {
+      console.log(qty, '-', qty-1)
+    } else {
+      console.log(qty, '+', qty+1)
+    }
+  };
+
   return (
     <Container>
       <Navbar />
@@ -255,8 +265,8 @@ const Cart = () => {
         <Title>YOUR BAG</Title>
         <Top>
           <Link to="/">
-          <TopButton type="filled">CONTINUE SHOPPING</TopButton>
-          {/* <Button >Del TO CART</Button> */}
+            <TopButton type="filled">CONTINUE SHOPPING</TopButton>
+            {/* <Button >Del TO CART</Button> */}
           </Link>
           <TopButton type="filled" onClick={delClick}>Delete Cart</TopButton>
 
@@ -288,12 +298,12 @@ const Cart = () => {
                 </ProductDetail>
                 <PriceDetail>
                   <ProductAmountContainer>
-                    {/* <Add /> */}
+                    <Add onClick={() => handleQuantity("inc", product)} />
                     <ProductAmount>Quantity: {product.quantity}</ProductAmount>
-                    {/* <Remove /> */}
+                    <Remove onClick={() => handleQuantity("dec", product)} />
                   </ProductAmountContainer>
                   <ProductPrice>
-                     ₹ {product.price * product.quantity}
+                    ₹ {product.price * product.quantity}
                   </ProductPrice>
                 </PriceDetail>
               </Product>
@@ -312,7 +322,7 @@ const Cart = () => {
             </SummaryItem> */}
             <SummaryItem>
               <SummaryItemText>Discount</SummaryItemText>
-              <SummaryItemPrice>{cart.total>0 && -discount}</SummaryItemPrice>
+              <SummaryItemPrice>{cart.total > 0 && -discount}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText>Total</SummaryItemText>
@@ -323,8 +333,8 @@ const Cart = () => {
               image="../favicon.ico"
               billingAddress
               shippingAddress
-              description={"Your total is  ₹" + (cart.total-discount)}
-              amount={(cart.total - discount)*100}
+              description={"Your total is  ₹" + (cart.total - discount)}
+              amount={(cart.total - discount) * 100}
               token={onToken}
               stripeKey={KEY}
             >
