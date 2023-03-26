@@ -21,7 +21,7 @@ const Faq = () => {
    <div class="faqs">
       <details>
          <summary>What Categories of products our website offer?</summary>
-         <p1 class="text">We offer various types of fresh vegetables, fruits and dairy products</p1>
+         <p1 class="text">We offer various types of fresh vegetables, fruits and grains</p1>
       </details>
       <details>
          <summary>How to checkout the products in my cart?</summary>

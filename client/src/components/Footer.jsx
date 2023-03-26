@@ -129,7 +129,7 @@ const Footer = () => {
           
           <ListItem><Link to={`/products/Fruit`} style={{ textDecoration: 'none', color: 'black' }}>Fruits</Link></ListItem>
       
-          <ListItem><Link to={`/products/Dairy`} style={{ textDecoration: 'none', color: 'black' }}>Dairy</Link></ListItem>
+          <ListItem><Link to={`/products/Grain`} style={{ textDecoration: 'none', color: 'black' }}>Grains</Link></ListItem>
           <ListItem><Link to={`/aboutus`} style={{ textDecoration: 'none', color: 'black' }}>AboutUs</Link></ListItem>
           <ListItem><Link to={`/faq`} style={{ textDecoration: 'none', color: 'black' }}>Faq</Link></ListItem>
           <ListItem><Link to={`/contact`} style={{ textDecoration: 'none', color: 'black' }}>ContactUs</Link></ListItem>
@@ -144,10 +144,10 @@ const Footer = () => {
           <Room style={{marginRight:"10px"}}/> <a style={{textDecoration: 'none', color: 'black'}} href="https://goo.gl/maps/xe66J9DxqBAisqsN6" target="_blank">SriCity, India</a>
         </ContactItem>
         <ContactItem>
-          <Phone style={{marginRight:"10px"}}/> <a style={{textDecoration: 'none', color: 'black'}}href="tel:+91 9490342221">+91 9490342221</a>
+          <Phone style={{marginRight:"10px"}}/> <a style={{textDecoration: 'none', color: 'black'}}href="tel:+91 7075675XXX">+91 7075675XXX</a>
         </ContactItem>
         <ContactItem>
-          <MailOutline style={{marginRight:"10px"}} /> <a style={{textDecoration: 'none', color: 'black'}}href="mailto:contact@greengrocery.com" >contact@greengrocery.com</a>
+          <MailOutline style={{marginRight:"10px"}} /> <a style={{textDecoration: 'none', color: 'black'}}href="mailto:contact@grainhub.com" >contact@grainhub.com</a>
         </ContactItem>
         <Payment src="https://i.ibb.co/Qfvn4z6/payment.png" />
       </Right>

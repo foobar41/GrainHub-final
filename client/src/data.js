@@ -17,7 +17,7 @@ export const sliderItems = [
     },
     {
       id: 3,
-      img: "https://domf5oio6qrcr.cloudfront.net/medialibrary/9685/iStock-544807136.jpg",
+      img: "https://pointias443387146.files.wordpress.com/2021/06/millets.png",
       title: "Grain Products Discount",
       desc: "DON'T COMPROMISE ON Grain PRODUCTS! HURRY UP AND GET FLAT 30% OFF.",
       bg: "f5fafd",
@@ -40,8 +40,7 @@ export const sliderItems = [
     },
     {
       id: 3,
-      img: "https://c4.wallpaperflare.com/wallpaper/736/232/30/cheese-4k-amazing-hd-wallpaper-preview.jpg",
-      // img: "https://content3.jdmagicbox.com/comp/def_content/milk_dairy/default-milk-dairy-12.jpg?clr=3b2b2b",
+      img: "https://somiigbene.com/wp-content/uploads/2021/05/What-you-need-to-know-about-grains-blog.png",
       title: "Grains",
       cat:"Grain"
     },

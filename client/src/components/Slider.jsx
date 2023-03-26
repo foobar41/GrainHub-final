@@ -55,14 +55,14 @@ const ImgContainer = styled.div`
  border-radius: 1.5%;
 
   height: 100%;
-  width: 70%;
+  width: 100%;
   flex: 1;
 `;
 
 const Image = styled.img`
   height: 80%;
   border-radius: 1.5%;
-
+  width: 100%;
 `;
 
 const InfoContainer = styled.div`
