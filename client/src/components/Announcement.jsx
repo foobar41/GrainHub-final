@@ -12,7 +12,7 @@ const Container = styled.div`
 `;
 
 const Announcement = () => {
-  return <Container>Today's Discount - Apple at ₹150</Container>;
+  return <Container>Today's Discount - Apple at ₹50</Container>;
 };
 
 export default Announcement;

@@ -94,7 +94,7 @@ const Footer = () => {
   return (
     <Container>
       <Left>
-        <Logo><Link to={`/`} style={{ textDecoration: 'none', color: 'black' }}>Green Grocery</Link></Logo>
+        <Logo><Link to={`/`} style={{ textDecoration: 'none', color: 'black' }}>GrainHub</Link></Logo>
         <Desc>
       We are here to making your lives simpler as you will find all the necessities and quality products in one place at low prices.
       Order thousands of products at just a tap that are much more hygenic from your neighbourhood stores.

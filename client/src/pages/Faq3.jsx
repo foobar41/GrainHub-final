@@ -27,7 +27,7 @@
 //                             <span class="icon"></span>
 //                         </dt>
 //                         <dd class="list__description">
-//                             You need not to pay for the products as these products are donated by different individuals and Green Grocery is working as a service provider to collect / verify/list / deliver these products. However a nominal shipping and handling charge will be applicable for delivering these products.
+//                             You need not to pay for the products as these products are donated by different individuals and GrainHub is working as a service provider to collect / verify/list / deliver these products. However a nominal shipping and handling charge will be applicable for delivering these products.
 //                         </dd>
 
             

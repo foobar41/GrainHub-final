@@ -53,7 +53,7 @@ const swaggerOptions = {
       title: "Customer API",
       description: "Customer API Information",
       contact: {
-        name: "Green Grocery"
+        name: "GrainHub"
       },
       servers: ["http://localhost:5000"]
     }

@@ -52,7 +52,7 @@ const Newsletter = () => {
   return (
     <Container>
       <Title>News Letter</Title>
-      <Desc>Get updates from Green Grocery by subscribing</Desc>
+      <Desc>Get updates from GrainHub by subscribing</Desc>
       <InputContainer>
         <Input placeholder="Your email" />
         <Button>

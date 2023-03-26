@@ -1,8 +1,8 @@
 swagger: "2.0"
 info:
-  description: "This is Green Grocery Swagger Server for documentation of REST APIs."
+  description: "This is GrainHub Swagger Server for documentation of REST APIs."
   version: "1.0.0"
-  title: "Green Grocery"
+  title: "GrainHub"
 tags:
 - name: "Auth"
   description: "Everything about Authorization"
@@ -338,23 +338,23 @@ definitions:
   Product:
     type: "object"
     properties:
-      title: 
+      name: 
         type: "string"
         format: "int32"
         required:
           - "true"
-      desc:
+      category:
         type: "string"
         format: "int32"
-      img:
+      image:
         type: "string"
         format: "int32"
       price:
         type: "number"
         format: "int64"
-      inStock:
-        type: "boolean"
-        default: true
+      in_stock:
+        type: "number"
+        default: 10
     xml:
       name: "Product"
   Contact:

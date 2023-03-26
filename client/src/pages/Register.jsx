@@ -36,9 +36,9 @@ export default function Register() {
     <div className="login">
       <div className="loginWrapper">
         <div className="loginLeft">
-          <h3 className="loginLogo">Green Grocery</h3>
+          <h3 className="loginLogo">GrainHub</h3>
           <span className="loginDesc">
-            Connect with Farmers and the world around you on Green Grocery.
+            Connect with Farmers and the world around you on GrainHub.
           </span>
         </div>
         <div className="loginRight">

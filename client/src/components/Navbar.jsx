@@ -98,7 +98,7 @@ const Navbar = () => {
             </SearchContainer> */}
           </Left>
           <Center>
-            <Logo><Link to={`/`} style={{ textDecoration: 'none', color: 'black' }}>Green Grocery</Link></Logo>
+            <Logo><Link to={`/`} style={{ textDecoration: 'none', color: 'black' }}>GrainHub</Link></Logo>
           </Center>
           <Right>
           <Link to="/shop" style={{ textDecoration: 'none', color: 'black' }}>
@@ -134,7 +134,7 @@ const Navbar = () => {
             </SearchContainer> */}
           </Left>
           <Center>
-            <Logo><Link to={`/`} style={{ textDecoration: 'none', color: 'black' }}>Green Grocery</Link></Logo>
+            <Logo><Link to={`/`} style={{ textDecoration: 'none', color: 'black' }}>GrainHub</Link></Logo>
           </Center>
           <Right>
           <Link to="/shop" style={{ textDecoration: 'none', color: 'black' }}>

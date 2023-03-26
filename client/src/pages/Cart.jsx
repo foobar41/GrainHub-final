@@ -207,6 +207,7 @@ const Button = styled.button`
   background-color: black;
   color: white;
   font-weight: 600;
+  cursor: pointer;
 `;
 
 const Cart = () => {
@@ -352,7 +353,7 @@ const Cart = () => {
               {cart.total > 0 && <SummaryItemPrice> ₹ {cart.total - discount} </SummaryItemPrice>}
             </SummaryItem>
             {cart.total > 0 && <StripeCheckout
-              name="Green Grocery"
+              name="GrainHub"
               image="../favicon.ico"
               billingAddress
               shippingAddress

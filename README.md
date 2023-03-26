@@ -1,4 +1,4 @@
-# Green Grocery
+# GrainHub
 ## WBD Project
 
 Group Number - 30
@@ -22,7 +22,7 @@ updating these products on the website.
 - Users can then select their required products and the respective quantity of each product and add them to the cart. After adding to the cart, the user can checkout and fill in the shipping details, and enter payment details.
 - After a successful transaction, the user will get an order confirmation and a tracking link. Users can resolve their queries in the Contact Us section.
 
-For more details about the project, please refer to the [**"Green Grocery PPT.pdf"**][1]
+For more details about the project, please refer to the [**"GrainHub PPT.pdf"**][1]
 
 [1]: https://github.com/fsd30/Green-Grocery/blob/main/Green%20Grocery.pdf "Title"
 
