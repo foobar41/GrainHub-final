@@ -12,6 +12,8 @@ import { useHistory } from "react-router";
 import { useDispatch } from "react-redux";
 import { clearCart } from "../redux/apiCalls";
 import { delCart } from "../redux/cartRedux";
+import { updateQuantity } from "../redux/cartRedux";
+import { removeProduct } from "../redux/cartRedux";
 
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
@@ -73,6 +75,31 @@ const Info = styled.div`
   flex: 3;
 `;
 
+const EmptyCart = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+`;
+
+const EmptyCartText = styled.h2`
+  font-size: 24px;
+  font-weight: 500;
+  text-align: center;
+`;
+
+const EmptyCartButton = styled.button`
+  padding: 10px;
+  margin: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  background-color: black;
+  color: white;
+`;
+
 const Product = styled.div`
   margin: 20px;
   display: flex;
@@ -101,19 +128,6 @@ const ProductName = styled.span`
 font-size: 24px;
 `;
 
-// const ProductId = styled.span`
-// font-size: 24px;
-// `;
-
-// const ProductColor = styled.div`
-//   width: 20px;
-//   height: 20px;
-//   border-radius: 50%;
-//   background-color:  ₹{(props) => props.color};
-// `;
-
-// const ProductSize = styled.span``;
-
 const PriceDetail = styled.div`
   flex: 1;
   display: flex;
@@ -124,8 +138,16 @@ const PriceDetail = styled.div`
 
 const ProductAmountContainer = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+`;
+
+const HandleQuantity = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  cursor: pointer;
 `;
 
 const ProductAmount = styled.div`
@@ -138,6 +160,11 @@ const ProductPrice = styled.div`
   font-size: 30px;
   font-weight: 200;
    ₹{mobile({ marginBottom: "20px" })}
+`;
+
+const RemoveProduct = styled.div`
+  margin-left: 20px;
+  cursor: pointer;
 `;
 
 const Hr = styled.hr`
@@ -208,7 +235,7 @@ const Cart = () => {
           userId: currentUser._id,
           // tokenId: stripeToken.id,
           address: stripeToken.card.address_line1 + " " + stripeToken.card.address_city + " " + stripeToken.card.address_zip,
-          amount: (cart.total + 25),
+          amount: (cart.total - discount),
         });
         history.push("/success/" + res2.data._id, {
           stripeData: res2.data,
@@ -249,13 +276,13 @@ const Cart = () => {
   }, [cart, stripeToken, cart.total, history]);
 
   const handleQuantity = (type, prod) => {
-    const qty = prod.quantity
-    if (type === "dec") {
-      console.log(qty, '-', qty-1)
-    } else {
-      console.log(qty, '+', qty+1)
-    }
+    const newQuantity = type === "dec" ? prod.quantity - 1 : prod.quantity + 1;
+    dispatch(updateQuantity({ name: prod.name, quantity: newQuantity }));
   };
+
+  const handleDelProduct = (prod) => {
+    dispatch(removeProduct({ name: prod.name }));
+  }
 
   return (
     <Container>
@@ -266,19 +293,17 @@ const Cart = () => {
         <Top>
           <Link to="/">
             <TopButton type="filled">CONTINUE SHOPPING</TopButton>
-            {/* <Button >Del TO CART</Button> */}
           </Link>
           <TopButton type="filled" onClick={delClick}>Delete Cart</TopButton>
-
-          {/* <Button onClick={dCart}>CHECKOUT NOW</Button> */}
-          {/* <TopTexts>
-            <TopText>Shopping Bag(0)</TopText>
-            <TopText>Your Wishlist (0)</TopText>
-          </TopTexts> */}
-          {/* <TopButton type="filled">CHECKOUT NOW</TopButton> */}
         </Top>
         <Bottom>
           <Info>
+            {cart.total == 0 && <EmptyCart>
+              <EmptyCartText>YOUR SHOPPING BAG IS EMPTY</EmptyCartText>
+              <Link to='/'>
+                <EmptyCartButton>Go shop some items</EmptyCartButton>
+              </Link>
+            </EmptyCart>}
             {cart.products.map((product) => (
               <Product key={product}>
                 <ProductDetail>
@@ -287,25 +312,23 @@ const Cart = () => {
                     <ProductName>
                       <b>Product:</b> {product.name}
                     </ProductName>
-                    {/* <ProductId>
-                      <b>Color:</b> {}
-                    </ProductId> */}
-                    {/* <ProductColor color={product.color} /> */}
-                    {/* <ProductSize>
-                      <b>Size:</b> {product.size}
-                    </ProductSize> */}
                   </Details>
                 </ProductDetail>
                 <PriceDetail>
                   <ProductAmountContainer>
-                    <Add onClick={() => handleQuantity("inc", product)} />
                     <ProductAmount>Quantity: {product.quantity}</ProductAmount>
-                    <Remove onClick={() => handleQuantity("dec", product)} />
+                    <HandleQuantity>
+                      <Add onClick={() => handleQuantity("inc", product)} />
+                      {product.quantity > 1 && <Remove onClick={() => handleQuantity("dec", product)} />}
+                    </HandleQuantity>
                   </ProductAmountContainer>
                   <ProductPrice>
                     ₹ {product.price * product.quantity}
                   </ProductPrice>
                 </PriceDetail>
+                <RemoveProduct>
+                  <Remove onClick={() => handleDelProduct(product)} />
+                </RemoveProduct>
               </Product>
             ))}
             <Hr />
@@ -316,19 +339,15 @@ const Cart = () => {
               <SummaryItemText>Subtotal</SummaryItemText>
               <SummaryItemPrice> ₹ {cart.total}</SummaryItemPrice>
             </SummaryItem>
-            {/* <SummaryItem>
-              <SummaryItemText>Estimated Shipping</SummaryItemText>
-              <SummaryItemPrice> ₹ 10.90</SummaryItemPrice>
-            </SummaryItem> */}
             <SummaryItem>
               <SummaryItemText>Discount</SummaryItemText>
               <SummaryItemPrice>{cart.total > 0 && -discount}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem type="total">
               <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice> ₹ {cart.total - discount} </SummaryItemPrice>
+              {cart.total > 0 && <SummaryItemPrice> ₹ {cart.total - discount} </SummaryItemPrice>}
             </SummaryItem>
-            <StripeCheckout
+            {cart.total > 0 && <StripeCheckout
               name="Green Grocery"
               image="../favicon.ico"
               billingAddress
@@ -339,7 +358,7 @@ const Cart = () => {
               stripeKey={KEY}
             >
               <Button>CHECKOUT NOW</Button>
-            </StripeCheckout>
+            </StripeCheckout>}
           </Summary>
         </Bottom>
       </Wrapper>

@@ -76,8 +76,8 @@ background-color: #d2f5fc;
 `;
 
 const Icon = styled.div`
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   background-color: #e1ebea;
   display: flex;
