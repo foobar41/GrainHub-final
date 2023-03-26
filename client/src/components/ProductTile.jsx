@@ -130,6 +130,7 @@ const ProductTile = ({ item }) => {
   };
 
   const handleClick = () => {
+    alert('Product Added to Cart')
     dispatch(
       addProduct({ ...product, quantity, color, size })
     );
