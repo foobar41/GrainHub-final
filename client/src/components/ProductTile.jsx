@@ -114,9 +114,9 @@ const ProductTile = ({ item }) => {
   useEffect(() => {
     const getProduct = async () => {
       try {
-        const res = await publicRequest.get("/products/find/" + id);
+        const res = await publicRequest.get("/products/find/" + item._id);
         setProduct(res.data);
-      } catch { }
+      } catch {}
     };
     getProduct();
   }, [id]);
@@ -131,8 +131,9 @@ const ProductTile = ({ item }) => {
 
   const handleClick = () => {
     alert('Product Added to Cart')
+    console.log(product)
     dispatch(
-      addProduct({ ...product, quantity, color, size })
+      addProduct({ ...product, id, quantity, color, size })
     );
   };
   return (

@@ -151,6 +151,7 @@ const Product = () => {
 
   const handleClick = () => {
     alert('Product added to cart')
+    console.log(product, id, quantity)
     dispatch(
       addProduct({ ...product, id, quantity, color, size })
     );
