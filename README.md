@@ -1,7 +1,7 @@
 # GrainHub
 ## WBD Project
 
-Group Number - 30
+Group Number - 2
 
 ## Problem Motivation
 - In these present situations, it is difficult for farmers to sell their products at a fair price in markets. Customers are buying hybrid fruits and vegetables which are not good for health which contain harmful substances.
@@ -22,9 +22,6 @@ updating these products on the website.
 - Users can then select their required products and the respective quantity of each product and add them to the cart. After adding to the cart, the user can checkout and fill in the shipping details, and enter payment details.
 - After a successful transaction, the user will get an order confirmation and a tracking link. Users can resolve their queries in the Contact Us section.
 
-For more details about the project, please refer to the [**"GrainHub PPT.pdf"**][1]
-
-[1]: https://github.com/fsd30/Green-Grocery/blob/main/Green%20Grocery.pdf "Title"
 
 ## Get Started
 
@@ -39,7 +36,7 @@ https://nodejs.org/en/.
 ★ After that in the terminal type ```pip install npm```.
 
 ★ Open the command prompt and run the command: 
-```git clone https://github.com/fsd30/Green-Grocery```
+```git clone https://github.com/foobar41/Grainhub-final```
 
 ★ We must now create two .env files in /client/ and /api/ folders.
   
@@ -55,9 +52,6 @@ https://nodejs.org/en/.
   - PASS_SEC = This is used for encrypting the password and can be named anything. 
   - JWT_SEC = This will be used for initialization of JWT Token and can be named anything as per convenience.
   - STRIPE_KEY = Here, the url of the stripe key must be provided.
-  - CLOUD_NAME = This is the cloud name used for cloudinary.
-  - CLOUDINARY_API_KEY = This is the api key used for cloudinary.
-  - CLOUDINARY_API_SECRET = This is the api secret key of cloudinary account 
 
 ★ Now, we have to install several dependencies.
 
@@ -72,20 +66,17 @@ in all the terminals: ```yarn start```
 enter the following URL's in your broweser for differenet pages.
 - Enter http://localhost:3000/ for the frontend page (Client).
 - Enter http://localhost:3001/ for the Admin Page.
-- Enter http://localhost:3002/ for the Volunteer Page.
 
 The API will run in the http://localhost:5000/ for the backend part and connceting to the MongoDB database.
 
 ★ After performing all the steps in correct order, the web application will start running smoothly. 
 
-#### NOTE: The presentation and website demo of our project is available at this youtube link: https://youtu.be/1cBzuk6oSCI
-
 ## Group Members
 
 <pre>
-Anirudh Jakhotia          - S20190010007
-Neeraj Dusa               - S20190010047
-Harish Mullagura          - S20190010124
-Rakesh Ganeshula          - S20190010052
-Kanduri Jayanth Sri Ram   - S20190010084
+Akhil G S V N S           - S20190010010
+Ramesh Palthya            - S20190010
+Manoj                     - S20190010
+Venkat Sourabh            - S20190010
+Bharat Raju               - S20190010
 </pre>
