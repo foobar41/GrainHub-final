@@ -7,13 +7,14 @@ import Products from './Products';
 import Orders from './Orders';
 import Analytics from './Analytics';
 
-function App() {
+function App_2() {
     const [loggedIn, setLoggedIn] = useState(false);
     const [user, setUser] = useState(null);
 
     useEffect(() => {
         const checkLoggedIn = async () => {
             const token = localStorage.getItem('adminToken');
+            console.log('adminToken:',token);
             if (token) {
                 try {
                     const res = await axios.get('/api/admin/me', {
@@ -84,4 +85,4 @@ function App() {
     );
 }
 
-export default App;
+export default App_2;

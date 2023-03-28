@@ -27,13 +27,13 @@ export default function ProductList() {
       renderCell: (params) => {
         return (
           <div className="productListItem">
-            <img className="productListImg" src={params.row.img} alt="" />
-            {params.row.title}
+            <img className="productListImg" src={params.row.image} alt="img" />
+            {params.row.name}
           </div>
         );
       },
     },
-    { field: "inStock", headerName: "Stock", width: 200 },
+    { field: "in_stock", headerName: "Stock", width: 200 },
     {
       field: "price",
       headerName: "Price",
@@ -67,7 +67,6 @@ export default function ProductList() {
         columns={columns}
         getRowId={(row) => row._id}
         pageSize={12}
-        checkboxSelection
       />
     </div>
   );

@@ -10,6 +10,7 @@ const cartRoute = require("./routes/cart");
 const orderRoute = require("./routes/order");
 const stripeRoute = require("./routes/stripe");
 const contactRoute = require("./routes/contact");
+const adminRoute = require("./routes/admin");
 
 // //Morgan Middleware
 // const cors = require("cors");
@@ -76,6 +77,7 @@ app.use("/api/carts", cartRoute);
 app.use("/api/orders", orderRoute);
 app.use("/api/checkout", stripeRoute);
 app.use("/api/contact", contactRoute);
+// app.use("/api/admin", adminRoute);
 app.use('/upload-images',upload.array('image'),async (req,res)=>{
   const uploader= async (path)=> await cloudinary.uploads(path,'Images')
   if(req.method==='POST')

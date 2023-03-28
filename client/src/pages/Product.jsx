@@ -172,15 +172,14 @@ const Product = () => {
           <Title>{product.name}</Title>
           <Desc>{product.desc}</Desc>
           <Price>₹ {product.price}</Price>
-          <FilterContainer>
+          {/* <FilterContainer>
             <Filter>
               <FilterTitle>Color</FilterTitle>
               {product.color?.map((c) => (
                 <FilterColor color={c} key={c} onClick={() => setColor(c)} />
               ))}
             </Filter>
-             {/* Removed Filter */}
-          </FilterContainer>
+          </FilterContainer> */}
           <AddContainer>
             <AmountContainer>
               <Remove onClick={() => handleQuantity("dec")} />
