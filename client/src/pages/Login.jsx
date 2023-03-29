@@ -4,7 +4,7 @@ import { login } from "../redux/apiCalls";
 import { mobile } from "../responsive";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-// import { useAlert } from 'react-alert'
+import axios from "axios";
 
 const Container = styled.div`
   width: 100vw;
@@ -111,9 +111,16 @@ const Login = () => {
   const { isFetching, error } = useSelector((state) => state.user);
   // const alert = useAlert();
 
-  const handleClick = (e) => {
+  const handleClick = async (e) => {
     e.preventDefault();
-    login(dispatch, { username, password });
+    try {
+      const res = await axios.post('http://localhost:5000/api/auth/login', { username, password });
+      localStorage.setItem('userToken', res.data.accessToken);
+      login(dispatch, { username, password });
+
+    } catch (err) {
+      console.log('something_client:', err);
+    }
   };
   return (
     <Container>
