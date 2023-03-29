@@ -82,7 +82,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   
   const handleClick = () => {
-    lgout(dispatch);
+    // lgout(dispatch);
   };
   
   if (!user){ 
@@ -143,7 +143,7 @@ const Navbar = () => {
           <Link to={"/user/"+user._id} style={{ textDecoration: 'none', color: 'black' }}>
               <MenuItem style={{ textDecoration: 'none', color: 'black'}}>Hello, {user.username.toUpperCase()} </MenuItem>
             </Link>
-            <Link to="/" onClick={handleClick} style={{ textDecoration: 'none', color: 'black' }}>
+            <Link to="/logout" onClick={handleClick} style={{ textDecoration: 'none', color: 'black' }}>
               <MenuItem style={{ textDecoration: 'none', color: 'black' }}><b>Logout</b></MenuItem>
             </Link>
             <Link to="/cart">

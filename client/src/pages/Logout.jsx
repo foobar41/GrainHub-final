@@ -67,31 +67,18 @@ const Button = styled.button`
 
 
 
-const Login = () => {
-  // const [username, setUsername] = useState("");
-  // const [password, setPassword] = useState("");
+const Logout = () => {
   const dispatch = useDispatch();
-  // const { isFetching, error } = useSelector((state) => state.user);
-
   const handleClick = (e) => {
     e.preventDefault();
+    localStorage.clear();
     lgout(dispatch);
-    // login(dispatch, { username, password });
   };
+
   return (
     <Container>
       <Wrapper>
         <Title><center>Are you sure you want to logout?</center></Title>
-        {/* <Form>
-          <Input
-            placeholder="Username"
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <Input
-            placeholder="Password"
-            type="password"
-            onChange={(e) => setPassword(e.target.value)}
-          />*/}
           <center>
           <Button onClick={handleClick}>
           <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>Logout</Link>
@@ -106,4 +93,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Logout;

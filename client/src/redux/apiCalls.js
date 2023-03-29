@@ -15,6 +15,7 @@ export const login = async (dispatch, user) => {
 
 export const lgout = (dispatch) => {
   dispatch(logout());
+  dispatch(delCart())
 };
 
 export const clearCart = (dispatch) => {
