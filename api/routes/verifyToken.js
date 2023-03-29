@@ -1,13 +1,9 @@
 const jwt = require("jsonwebtoken");
 
 const verifyToken = (req, res, next) => {
-  console.log(req.headers);
   const authHeader = req.headers.authorization;
-  // const authHeader = true;
-
   if (authHeader) {
     const token = authHeader.split(" ")[1];
-    // const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxOTI0ZjM4NjRhODM2YTJiZTFiYWZlMyIsImlzQWRtaW4iOnRydWUsImlhdCI6MTY0OTA0NzYzOCwiZXhwIjoxNjUxNjM5NjM4fQ.lCR2oJYR11OLrOHyEN4dSbEmfXE8b-0kCRyCyFQBvqw"
     jwt.verify(token, process.env.JWT_SEC, (err, user) => {
       if (err) res.status(403).json("Token is not valid!");
       req.user = user;
@@ -29,8 +25,9 @@ const verifyTokenAndAuthorization = (req, res, next) => {
 };
 
 const verifyTokenAndAdmin = (req, res, next) => {
-  console.log(req.user)
+  console.log('first:', req.user)
   verifyToken(req, res, () => {
+    console.log('second:', req.user)
     if (req.user.isAdmin) {
       next();
     } else {

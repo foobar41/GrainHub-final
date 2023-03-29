@@ -6,27 +6,23 @@ import axios from 'axios';
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [user, setUser] = useState(null);
   const { isFetching, error } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-
-  // const handleClick = (e) => {
-  //   e.preventDefault();
-  //   login(dispatch, { username, password });
-  // };
 
   const handleLogin = async(e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('/api/admin/login', { username, password });
-      console.log('res:', res)
-      localStorage.setItem('adminToken', res.data.token);
-      setLoggedIn(true);
-      setUser(res.data.user);
-      login(dispatch, { username, password });
+      const res = await axios.post('http://localhost:5000/api/admin/login', { username, password });
+      if (res.data.isAdmin) {
+        localStorage.setItem('adminToken', res.data.accessToken);
+        login(dispatch, { username, password });
+        window.location.reload();
+      } else {
+        alert('You are not an admin!');
+      }
+
     } catch (err) {
-      console.error(err);
+      console.log('something:',err);
     }
   };
 

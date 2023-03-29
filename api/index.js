@@ -77,7 +77,8 @@ app.use("/api/carts", cartRoute);
 app.use("/api/orders", orderRoute);
 app.use("/api/checkout", stripeRoute);
 app.use("/api/contact", contactRoute);
-// app.use("/api/admin", adminRoute);
+app.use("/api/admin", adminRoute);
+
 app.use('/upload-images',upload.array('image'),async (req,res)=>{
   const uploader= async (path)=> await cloudinary.uploads(path,'Images')
   if(req.method==='POST')

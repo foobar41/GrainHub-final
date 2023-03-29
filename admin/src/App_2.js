@@ -17,7 +17,7 @@ function App_2() {
             console.log('adminToken:',token);
             if (token) {
                 try {
-                    const res = await axios.get('/api/admin/me', {
+                    const res = await axios.get('http://localhost:5000/api/admin/me', {
                         headers: {
                             Authorization: `Bearer ${token}`,
                         },
@@ -34,7 +34,7 @@ function App_2() {
 
     const handleLogin = async (email, password) => {
         try {
-            const res = await axios.post('/api/admin/login', { email, password });
+            const res = await axios.post('http://localhost:5000/api/admin/login', { email, password });
             localStorage.setItem('adminToken', res.data.token);
             setLoggedIn(true);
             setUser(res.data.user);
