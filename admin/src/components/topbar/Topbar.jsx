@@ -2,7 +2,7 @@ import React from "react";
 import "./topbar.css";
 import { ExitToApp } from "@material-ui/icons";
 import { logoutUser } from "../../redux/apiCalls";
-import { useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 
 export default function Topbar() {
   const dispatch = useDispatch();
@@ -10,7 +10,7 @@ export default function Topbar() {
   const handleLogout = () => {
     localStorage.removeItem('adminToken');
     logoutUser(dispatch);
-    window.location.reload()
+    window.location.href = "http://localhost:3001"
   };
 
   return (
@@ -20,8 +20,9 @@ export default function Topbar() {
           <span className="logo">Admin</span>
         </div>
         <div className="topRight">
-          <div className="topbarIconContainer">
-            <ExitToApp onClick={handleLogout} />
+          <div onClick={handleLogout} className="topbarIconContainer">
+            <ExitToApp />
+            <h4>Logout</h4>
           </div>
         </div>
       </div>

@@ -54,6 +54,10 @@ export default function Product() {
     getStats();
   }, [productId, MONTHS]);
 
+  const handleUpdate = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div className="product">
       <div className="productTitleContainer">
@@ -92,15 +96,10 @@ export default function Product() {
           <div className="productFormLeft">
             <label>Product Name</label>
             <input type="text" placeholder={product.name} />
-            <label>Product Description</label>
+            <label>Product Price</label>
             <input type="text" placeholder={product.price} />
             <label>Add Stock</label>
             <input type="number" placeholder={product.in_stock} />
-            {/* <label>In Stock</label>
-            <select name="inStock" id="idStock">
-              <option value="true">Yes</option>
-              <option value="false">No</option>
-            </select> */}
           </div>
           <div className="productFormRight">
             <div className="productUpload">
@@ -110,7 +109,7 @@ export default function Product() {
               </label>
               <input type="file" id="file" style={{ display: "none", cursor:'pointer'}}/>
             </div>
-            <button className="productButton">Update</button>
+            <button onClick={handleUpdate} className="productButton">Update</button>
           </div>
         </form>
       </div>
