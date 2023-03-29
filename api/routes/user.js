@@ -57,6 +57,18 @@ router.get("/find/:id", verifyTokenAndAdmin, async (req, res) => {
   }
 });
 
+//GET USER BY EMAIL
+router.get("/findEmail/:email", verifyTokenAndAdmin, async (req, res) => {
+  try {
+    const user = await User.find({email: req.params.email});
+    // const { password, ...others } = user._doc;
+    console.log('user: ', user);
+    res.status(200).json(others);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 //GET ALL USER
 router.get("/", verifyTokenAndAdmin, async (req, res) => {
   const query = req.query.new;
@@ -72,7 +84,6 @@ router.get("/", verifyTokenAndAdmin, async (req, res) => {
 });
 
 //GET USER STATS
-
 router.get("/stats", verifyTokenAndAdmin, async (req, res) => {
   const date = new Date();
   const lastYear = new Date(date.setFullYear(date.getFullYear() - 1));

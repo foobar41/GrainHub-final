@@ -63,7 +63,7 @@ router.get("/find/:id", async (req, res) => {
   }
 });
 
-//GET PRODUCT
+//GET PRODUCT BY CATEGORY
 router.get("/findCat/:category", async (req, res) => {
   console.log(req.params);
   try {

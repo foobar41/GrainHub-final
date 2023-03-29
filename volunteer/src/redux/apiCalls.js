@@ -15,18 +15,6 @@ import {
   addProductSuccess,
 } from "./productRedux";
 
-import {
-  getContactStart,
-  getContactSuccess,
-  getContactFailure,
-} from "./contactRedux";
-
-import {
-  getOrderStart,
-  getOrderSuccess,
-  getOrderFailure,
-} from "./orderRedux";
-
 export const login = async (dispatch, user) => {
   dispatch(loginStart());
   try {
@@ -35,10 +23,6 @@ export const login = async (dispatch, user) => {
   } catch (err) {
     dispatch(loginFailure());
   }
-};
-
-export const logoutUser = async (dispatch) => {
-  dispatch(logout());
 };
 
 export const getProducts = async (dispatch) => {
@@ -54,7 +38,7 @@ export const getProducts = async (dispatch) => {
 export const deleteProduct = async (id, dispatch) => {
   dispatch(deleteProductStart());
   try {
-    await userRequest.delete(`/products/${id}`);
+    // const res = await userRequest.delete(`/products/${id}`);
     dispatch(deleteProductSuccess(id));
   } catch (err) {
     dispatch(deleteProductFailure());
@@ -76,28 +60,11 @@ export const addProduct = async (product, dispatch) => {
     const res = await userRequest.post(`/products`, product);
     dispatch(addProductSuccess(res.data));
   } catch (err) {
+    console.log("in product");
     dispatch(addProductFailure());
   }
 };
 
-//Get Contact
-export const getContacts = async (dispatch) => {
-  dispatch(getContactStart());
-  try {
-    const res = await publicRequest.get("/contacts");
-    dispatch(getContactSuccess(res.data));
-  } catch (err) {
-    dispatch(getContactFailure());
-  }
-};
-
-//Get Order
-export const getOrders = async (dispatch) => {
-  dispatch(getOrderStart());
-  try {
-    const res = await publicRequest.get("/order");
-    dispatch(getOrderSuccess(res.data));
-  } catch (err) {
-    dispatch(getOrderFailure());
-  }
+export const lgout = (dispatch) => {
+  dispatch(logout());
 };

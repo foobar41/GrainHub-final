@@ -1,3 +1,5 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Sidebar from "./components/sidebar/Sidebar";
 import Topbar from "./components/topbar/Topbar";
 import "./App.css";
@@ -13,24 +15,46 @@ import User from "./pages/user/User";
 import NewUser from "./pages/newUser/NewUser";
 import ProductList from "./pages/productList/ProductList";
 import Product from "./pages/product/Product";
-import NewProduct from "./pages/newProduct/NewProduct";
+// import NewProduct from "./pages/newProduct/NewProduct";
 import Login from "./pages/login/Login";
-import { useSelector } from "react-redux";
 import ContactList from "./pages/contactList/ContactList";
 import OrderList from "./pages/orderList/OrderList";
 import Contact from "./pages/contact/Contact";
 import PayList from "./pages/paymentList/Transactions";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "./redux/apiCalls";
 
 function App() {
-  // const admin = useSelector((state) => state.user.currentUser.isAdmin);
-  const admin = true;
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    checkLoggedIn();
+  }, []);
+
+  const checkLoggedIn = async () => {
+    const token = localStorage.getItem('adminToken');
+    if (token) {
+      try {
+        const res = await axios.get('http://localhost:5000/api/admin/me', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setLoggedIn(true);
+        setUser(res.data);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  };
+
   return (
     <Router>
       <Switch>
-        <Route path="/login">
+        {!loggedIn ? ( <Route exact path="/">
           <Login />
-        </Route>
-        {admin && (
+        </Route>) : (
           <>
             <Topbar />
             <div className="container">
@@ -53,9 +77,9 @@ function App() {
               <Route path="/product/:productId">
                 <Product />
               </Route>
-              <Route path="/newproduct">
+              {/* <Route path="/newproduct">
                 <NewProduct />
-              </Route>
+              </Route> */}
               <Route path="/contacts">
                 <ContactList />
               </Route>

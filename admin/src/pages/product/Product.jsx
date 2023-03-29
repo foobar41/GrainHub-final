@@ -68,21 +68,21 @@ export default function Product() {
         </div>
         <div className="productTopRight">
           <div className="productInfoTop">
-            <img src={product.img} alt="" className="productInfoImg" />
-            <span className="productName">{product.title}</span>
+            <img src={product.image} alt="" className="productInfoImg" />
+            <span className="productName">{product.name}</span>
           </div>
           <div className="productInfoBottom">
             <div className="productInfoItem">
-              <span className="productInfoKey">id:</span>
+              <span className="productInfoKey">id: </span>
               <span className="productInfoValue">{product._id}</span>
             </div>
-            <div className="productInfoItem">
+            {/* <div className="productInfoItem">
               <span className="productInfoKey">Sales:</span>
               <span className="productInfoValue">0</span>
-            </div>
+            </div> */}
             <div className="productInfoItem">
               <span className="productInfoKey">In stock:</span>
-              <span className="productInfoValue">{product.inStock? "Yes" : "No"}</span>
+              <span className="productInfoValue">{product.in_stock ? "Yes" : "No"}</span>
             </div>
           </div>
         </div>
@@ -91,24 +91,24 @@ export default function Product() {
         <form className="productForm">
           <div className="productFormLeft">
             <label>Product Name</label>
-            <input type="text" placeholder={product.title} />
+            <input type="text" placeholder={product.name} />
             <label>Product Description</label>
-            <input type="text" placeholder={product.desc} />
-            <label>Price</label>
             <input type="text" placeholder={product.price} />
-            <label>In Stock</label>
+            <label>Add Stock</label>
+            <input type="number" placeholder={product.in_stock} />
+            {/* <label>In Stock</label>
             <select name="inStock" id="idStock">
               <option value="true">Yes</option>
               <option value="false">No</option>
-            </select>
+            </select> */}
           </div>
           <div className="productFormRight">
             <div className="productUpload">
-              <img src={product.img} alt="" className="productUploadImg" />
+              <img src={product.image} alt="" className="productUploadImg"/>
               <label for="file">
                 <Publish />
               </label>
-              <input type="file" id="file" style={{ display: "none" }} />
+              <input type="file" id="file" style={{ display: "none", cursor:'pointer'}}/>
             </div>
             <button className="productButton">Update</button>
           </div>
