@@ -100,10 +100,6 @@ const Lik = styled.a`
   cursor: pointer;
 `;
 
-const Error = styled.span`
-  color: red;
-`;
-
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -122,6 +118,7 @@ const Login = () => {
       console.log('something_client:', err);
     }
   };
+
   return (
     <Container>
       <Wrapper>

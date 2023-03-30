@@ -18,17 +18,9 @@ dotenv.config();
 
 app.use(express.json());
 app.use("/images", express.static(path.join(__dirname,"/images")))
-
-
-//Connecting mongodb
-mongoose.connect(process.env.MONGO_URL,{
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-}).then(console.log("Connected to MongoDB"))
-.catch((err)=>console.log(err));
+app.use(cors())
 
 //Add images to local storage
-
 const storage = multer.diskStorage({
     destination:(req,file,cb) =>{
         cb(null,"images")

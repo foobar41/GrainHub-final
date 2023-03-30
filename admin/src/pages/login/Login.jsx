@@ -6,7 +6,6 @@ import axios from 'axios';
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { isFetching, error } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const handleLogin = async(e) => {
@@ -22,7 +21,7 @@ const Login = () => {
       }
 
     } catch (err) {
-      console.log('something:',err);
+      console.log(err);
     }
   };
 
@@ -51,7 +50,6 @@ const Login = () => {
       <button onClick={handleLogin} style={{ padding: 10, width:100 }}>
         Login
       </button>
-      {error && <h1>Something went wrong...</h1>}
     </div>
   );
 };

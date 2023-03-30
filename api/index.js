@@ -11,6 +11,7 @@ const orderRoute = require("./routes/order");
 const stripeRoute = require("./routes/stripe");
 const contactRoute = require("./routes/contact");
 const adminRoute = require("./routes/admin");
+const Product = require("./models/Product");
 
 // //Morgan Middleware
 // const cors = require("cors");
@@ -26,17 +27,29 @@ const { accessLogStream } = require("./middlewares/morgan");
 //Swagger API
 const swaggerJsDoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
-const YAML=require('yamljs')
-const swaggerDocument=YAML.load('./swagger.yaml')
+const YAML = require('yamljs')
+const swaggerDocument = YAML.load('./swagger.yaml')
 
 //Cloudinary Images Upload through Multer Middleware
-const upload=require("./middlewares/multer")
-const cloudinary=require("./cloud uploads/cloudinary")
-const fs=require('fs')
+const upload = require("./middlewares/multer")
+const fs = require('fs');
+const path = require('path');
 
 mongoose
   .connect(process.env.MONGO_URL)
-  .then(() => console.log("DB Connection Successfull!"))
+  .then(async () => {
+    console.log("DB Connection Successfull!")
+
+    const count = await Product.countDocuments();
+    if (count === 0) {
+      const filePath = path.join(__dirname, '../products.json');
+      const jsonData = fs.readFileSync(filePath, { encoding: 'utf8' });
+      const products = JSON.parse(jsonData);
+
+      Product.insertMany(products)
+        .catch((err) => console.log(err))
+    }
+  })
   .catch((err) => {
     console.log(err);
   });
@@ -79,28 +92,24 @@ app.use("/api/checkout", stripeRoute);
 app.use("/api/contact", contactRoute);
 app.use("/api/admin", adminRoute);
 
-app.use('/upload-images',upload.array('image'),async (req,res)=>{
-  const uploader= async (path)=> await cloudinary.uploads(path,'Images')
-  if(req.method==='POST')
-  {
-    const urls=[]
-    const files=req.files
-    for(const file of files)
-    {
-      const {path}=file
-      const newPath=await uploader(path)
+app.use('/upload-images', upload.array('image'), async (req, res) => {
+  if (req.method === 'POST') {
+    const urls = []
+    const files = req.files
+    for (const file of files) {
+      const { path } = file
+      const newPath = await uploader(path)
       urls.push(newPath)
       fs.unlinkSync(path)
     }
     res.status(200).json({
-      message:'Images Uploaded Successfully',
-      data:urls
+      message: 'Images Uploaded Successfully',
+      data: urls
     })
-  } 
-  else
-  {
+  }
+  else {
     res.status(405).json({
-      err:"Images not uploaded Successfully"
+      err: "Images not uploaded Successfully"
     })
   }
 });
