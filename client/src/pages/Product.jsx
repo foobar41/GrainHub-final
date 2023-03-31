@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { publicRequest } from "../requestMethods";
 import { addProduct, delCart } from "../redux/cartRedux";
 import { useDispatch } from "react-redux";
+import axios from "axios";
 
 const Container = styled.div``;
 
@@ -136,7 +137,7 @@ const Product = () => {
       try {
         const res = await publicRequest.get("/products/find/" + id);
         setProduct(res.data);
-      } catch {}
+      } catch { }
     };
     getProduct();
   }, [id]);
@@ -150,10 +151,20 @@ const Product = () => {
   };
 
   const handleClick = () => {
+    if (quantity > product.in_stock) {
+      alert(`Product out of stock\nOnly ${product.in_stock} left`)
+      return
+    }
     alert('Product added to cart')
     dispatch(
       addProduct({ ...product, id, quantity, color, size })
     );
+
+    // Make a POST request to update the product in the database
+    const updatedProduct = { ...product, in_stock: product.in_stock - quantity };
+    axios.put(`/api/products/${product._id}`, updatedProduct)
+      .then(response => console.log(response))
+      .catch(error => console.log(error));
   };
   // const delClick = () => {
   //   dispatch(

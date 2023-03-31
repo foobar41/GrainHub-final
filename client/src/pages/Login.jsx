@@ -115,7 +115,7 @@ const Login = () => {
       login(dispatch, { username, password });
 
     } catch (err) {
-      console.log('something_client:', err);
+      console.log( err);
     }
   };
 

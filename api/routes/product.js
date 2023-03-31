@@ -1,6 +1,5 @@
 const Product = require("../models/Product");
-// const fs = require("fs");
-// const path = require("path");
+const ObjectId = require('mongoose').Types.ObjectId;
 
 const {
   verifyToken,
@@ -11,7 +10,7 @@ const {
 const router = require("express").Router();
 
 //CREATE
-router.post("/", verifyTokenAndAdmin, async (req, res) => {
+router.post("/", verifyToken, async (req, res) => {
   // console.log('started')
   // const filePath = path.join("api", "products.json");
   // const jsonData = fs.readFileSync(filePath, { encoding: "utf8" });
@@ -28,10 +27,10 @@ router.post("/", verifyTokenAndAdmin, async (req, res) => {
 });
 
 //UPDATE
-router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
+router.put("/:id", verifyToken, async (req, res) => {
   try {
     const updatedProduct = await Product.findByIdAndUpdate(
-      req.params.id,
+      new ObjectId(req.params.id),
       {
         $set: req.body,
       },
@@ -44,7 +43,7 @@ router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
 });
 
 //DELETE
-router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
+router.delete("/:id", verifyToken, async (req, res) => {
   try {
     await Product.findByIdAndDelete(req.params.id);
     res.status(200).json("Product has been deleted...");
