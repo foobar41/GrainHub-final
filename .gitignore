@@ -1,4 +1,3 @@
-node-modules/
-access_logs/
-.vscode/
+.vscode
 node_modules
+access_logs

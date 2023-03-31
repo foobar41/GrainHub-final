@@ -1,6 +1,0 @@
-::ffff:127.0.0.1 - - [25/Mar/2023:13:39:49 +0000] "GET /api/products HTTP/1.1" 200 3749 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/112.0"
-::ffff:127.0.0.1 - - [25/Mar/2023:13:39:49 +0000] "GET /api/products/find/undefined HTTP/1.1" 500 246 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/112.0"
-::ffff:127.0.0.1 - - [25/Mar/2023:13:47:41 +0000] "GET / HTTP/1.1" 404 139 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/112.0"
-::ffff:127.0.0.1 - - [25/Mar/2023:13:49:21 +0000] "GET /grain HTTP/1.1" 404 144 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/112.0"
-::ffff:127.0.0.1 - - [25/Mar/2023:13:49:28 +0000] "GET /api/grain HTTP/1.1" 404 148 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/112.0"
-::ffff:127.0.0.1 - - [25/Mar/2023:13:50:06 +0000] "GET /api/upload HTTP/1.1" 404 149 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/112.0"

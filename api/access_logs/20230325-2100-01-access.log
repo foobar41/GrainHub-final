@@ -1,2 +1,0 @@
-::ffff:127.0.0.1 - - [25/Mar/2023:14:50:41 +0000] "GET /api/products HTTP/1.1" 304 - "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/112.0"
-::ffff:127.0.0.1 - - [25/Mar/2023:14:50:41 +0000] "GET /api/products/find/undefined HTTP/1.1" 500 246 "http://localhost:3000/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/112.0"
