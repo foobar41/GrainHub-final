@@ -293,21 +293,7 @@ definitions:
       password:
         type: "string"
     xml:
-      name: "User"
-  Cart:
-    type: "object"
-    properties:
-      id:
-        type: "integer"
-        format: "int64"
-      products: 
-        type: "string"
-        format: "int32"
-      quantity:
-        type: "string"
-        format: "int32"
-    xml:
-      name: "User"    
+      name: "User"   
   Order:
     type: "object"
     properties:
