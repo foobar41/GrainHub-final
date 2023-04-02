@@ -4,9 +4,6 @@ const dotenv = require("dotenv");
 const mongoose = require('mongoose');
 const authRoute = require("./routes/auth");
 const userRoute = require("./routes/user");
-const postRoute = require("./routes/posts");
-const categoryRoute = require("./routes/categories");
-const eventRoute = require("./routes/Events")
 const multer = require("multer");
 const path = require("path");
 const swaggerUi = require('swagger-ui-express')
@@ -39,9 +36,6 @@ app.post("/api/upload", upload.single("file"),(req,res)=>{
 
 app.use("/api/auth",authRoute);
 app.use("/api/users",userRoute);
-app.use("/api/posts",postRoute);
-app.use("/api/categories",categoryRoute);
-app.use("/api/events",eventRoute);
 
 
 

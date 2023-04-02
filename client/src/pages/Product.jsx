@@ -169,7 +169,6 @@ const Product = () => {
         Authorization: `Bearer ${localStorage.getItem('userToken')}`
       }
     })
-      .then(response => console.log(response))
       .then(() => getProduct())
       .catch(error => console.log(error));
   };

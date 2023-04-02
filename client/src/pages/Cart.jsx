@@ -232,52 +232,42 @@ const Cart = () => {
     );
   };
 
+  const makeRequest = async () => {
+    try {
+      const res = await userRequest.post("http://localhost:5000/api/orders", {
+        products: cart.products,
+        userId: currentUser._id,
+        // tokenId: stripeToken.id,
+        address: stripeToken.card.address_line1 + " " + stripeToken.card.address_city + " " + stripeToken.card.address_zip,
+        amount: (cart.total - discount),
+      }, {
+        headers: {
+          Authorization: `Bearer ${currentUser.accessToken}`
+        }
+      });
+      history.push("/success/" + res.data._id, {
+        stripeData: res.data,
+        products: cart,
+      });
+      setOrderId(res);
+      // console.log(res.data._id);
+      // console.log(stripeToken.card);
+    } catch {
+      console.log("error here");
+    }
+    try {
+      await userRequest.post("http://localhost:5000/api/checkout/payment", {
+        tokenId: stripeToken.id,
+        amount: (cart.total - discount),
+      });
+    } catch {
+      console.log("error here 2");
+    }
+    clearCart(dispatch);
+  };
+
   useEffect(() => {
-    const makeRequest2 = async () => {
-      try {
-        const res2 = await userRequest.post("/orders", {
-          products: cart.products,
-          userId: currentUser._id,
-          // tokenId: stripeToken.id,
-          address: stripeToken.card.address_line1 + " " + stripeToken.card.address_city + " " + stripeToken.card.address_zip,
-          amount: (cart.total - discount),
-        });
-        history.push("/success/" + res2.data._id, {
-          stripeData: res2.data,
-          products: cart,
-        });
-        setOrderId(res2);
-        console.log(res2.data._id);
-        console.log(stripeToken.card);
-        // 4242 4242 4242 4242
-      } catch {
-        console.log("error here");
-      }
-      try {
-        const res = await userRequest.post("http://localhost:5000/api/checkout/payment", {
-          tokenId: stripeToken.id,
-          amount: (cart.total - 5) * 100,
-        });
-      } catch {
-        console.log("error here 2");
-      }
-      clearCart(dispatch);
-    };
-
-    // const makeRequest = async () => {
-
-    // };
-    // const dCart = async () => {
-    //   // const res = await makeRequest2();
-    //   // const res2 = await makeRequest();
-    //   clearCart(dispatch);
-
-    // };
-    stripeToken && makeRequest2();
-    // makeRequest();
-    console.log(cart);
-    // dCart();
-    // currentUser.cart.quantity = 0;
+    stripeToken && makeRequest();
   }, [cart, stripeToken, cart.total, history]);
 
   const handleQuantity = (type, prod) => {
@@ -358,9 +348,10 @@ const Cart = () => {
               billingAddress
               shippingAddress
               description={"Your total is  ₹" + (cart.total - discount)}
-              amount={(cart.total - discount) * 100}
+              amount={(cart.total - discount)*100}
               token={onToken}
               stripeKey={KEY}
+              currency="INR"
             >
               <Button>CHECKOUT NOW</Button>
             </StripeCheckout>}
