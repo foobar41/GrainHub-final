@@ -52,7 +52,7 @@ export default function Contact() {
               className="userShowImg"
             /> */}
             <div className="userShowTopTitle">
-              <span className="userShowUsername">{contact.username}</span>
+              <span className="userShowUsername">{contact.name}</span>
               {/* <span className="userShowUserTitle">Software Engineer</span> */}
             </div>
           </div>
@@ -60,7 +60,7 @@ export default function Contact() {
             <span className="userShowTitle">User</span>
             <div className="userShowInfo">
               <PermIdentity className="userShowIcon" />
-              <span className="userShowInfoTitle">{contact.username}</span>
+              <span className="userShowInfoTitle">{contact.name}</span>
             </div>
             <div className="userShowInfo">
               <CalendarToday className="userShowIcon" />
@@ -89,7 +89,7 @@ export default function Contact() {
                 <label>Username</label>
                 <input
                   type="text"
-                  placeholder={contact.username}
+                  placeholder={contact.name}
                   className="userUpdateInput"
                 />
               </div>

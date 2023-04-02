@@ -105,7 +105,7 @@ const Error = styled.span`
 `;
 
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [name, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const { isFetching, error } = useSelector((state) => state.user);
@@ -113,8 +113,8 @@ const Login = () => {
 
   const handleClick = async (e) => {
     e.preventDefault();
-    console.log(username + password);
-    login(dispatch, { username, password });
+    console.log(name + password);
+    login(dispatch, { name, password });
     // history.push("/");
     // window.location.reload();
     // window.location.reload(true);
@@ -125,7 +125,7 @@ const Login = () => {
         <Title><center>VOLUNTEER SIGN IN</center></Title>
         <Form>
           <Input
-            placeholder="Username"
+            placeholder="Name"
             onChange={(e) => setUsername(e.target.value)}
           />
           <Input

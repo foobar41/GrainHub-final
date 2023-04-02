@@ -141,7 +141,7 @@ const Navbar = () => {
               <MenuItem style={{ textDecoration: 'none', color: 'black' }}>SHOP</MenuItem>
             </Link>
           <Link to={"/user/"+user._id} style={{ textDecoration: 'none', color: 'black' }}>
-              <MenuItem style={{ textDecoration: 'none', color: 'black'}}>Hello, {user.username.toUpperCase()} </MenuItem>
+              <MenuItem style={{ textDecoration: 'none', color: 'black'}}>Hello, {user.name.toUpperCase()} </MenuItem>
             </Link>
             <Link to="/logout" onClick={handleClick} style={{ textDecoration: 'none', color: 'black' }}>
               <MenuItem style={{ textDecoration: 'none', color: 'black' }}><b>Logout</b></MenuItem>

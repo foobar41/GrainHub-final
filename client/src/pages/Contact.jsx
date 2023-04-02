@@ -13,9 +13,9 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus("Sending...");
-    const { username, email, desc } = e.target.elements;
+    const { name, email, desc } = e.target.elements;
     let details = {
-      username: username.value,
+      name: name.value,
       email: email.value,
       desc: desc.value,
     };
@@ -45,7 +45,7 @@ const Contact = () => {
           <form onSubmit={handleSubmit}>
             <div class="dbl-field">
               <div class="field">
-                <input type="text" name="username" htmlFor="username" id="username" placeholder="Enter your name" required></input>
+                <input type="text" name="name" htmlFor="name" id="name" placeholder="Enter your name" required></input>
                 <i class='fas fa-user'></i>
               </div>
               <div class="field">

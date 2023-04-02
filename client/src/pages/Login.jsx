@@ -101,7 +101,7 @@ const Lik = styled.a`
 `;
 
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const { isFetching, error } = useSelector((state) => state.user);
@@ -110,9 +110,9 @@ const Login = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', { username, password });
+      const res = await axios.post('http://localhost:5000/api/auth/login', { name, password });
       localStorage.setItem('userToken', res.data.accessToken);
-      login(dispatch, { username, password });
+      login(dispatch, { name, password });
 
     } catch (err) {
       console.log( err);
@@ -125,8 +125,8 @@ const Login = () => {
         <Title><center>SIGN IN</center></Title>
         <Form>
           <Input
-            placeholder="Username"
-            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Name"
+            onChange={(e) => setName(e.target.value)}
           />
           <Input
             placeholder="Password"

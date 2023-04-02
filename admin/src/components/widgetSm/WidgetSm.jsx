@@ -32,7 +32,7 @@ export default function WidgetSm() {
               className="widgetSmImg"
             />
             <div className="widgetSmUser">
-              <span className="widgetSmUsername">{user.username}</span>
+              <span className="widgetSmUsername">{user.name}</span>
             </div>
             <div className="widgetSmUser">
             <span className="widgetSmUsername">{format(user.createdAt)}</span>

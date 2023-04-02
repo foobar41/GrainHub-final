@@ -35,14 +35,14 @@ export default function UserList() {
   const columns = [
     { field: "_id", headerName: "ID", width: 220 },
     {
-      field: "username",
+      field: "name",
       headerName: "User",
       width: 200,
       renderCell: (params) => {
         return (
           <div className="userListUser">
             <img className="userListImg" src={params.row.img || "https://crowd-literature.eu/wp-content/uploads/2015/01/no-avatar.gif"} alt="" />
-            {params.row.username}
+            {params.row.name}
           </div>
         );
       },

@@ -286,7 +286,7 @@ definitions:
   User:
     type: "object"
     properties:
-      username:
+      name:
         type: "string"
       email:
         type: "string"
@@ -360,7 +360,7 @@ definitions:
   Contact:
     type: "object"
     properties:
-      username: 
+      name: 
         type: "string"
         format: "int32"
       email:

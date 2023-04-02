@@ -39,7 +39,7 @@ export default function UserList() {
         return (
           <div className="userListUser">
             <img className="userListImg" src={params.row.avatar} alt="" />
-            {params.row.username}
+            {params.row.name}
           </div>
         );
       },
@@ -102,7 +102,7 @@ export default function UserList() {
     //           <span className="widgetSmUsername">{user._id}</span>
     //         </div>
     //         <div className="widgetSmUser">
-    //           <span className="widgetSmUsername">{user.username}</span>
+    //           <span className="widgetSmUsername">{user.name}</span>
     //         </div>
     //         <div className="widgetSmUser"><center>
     //           <span className="widgetSmUsername">{user.email}</span> </center>

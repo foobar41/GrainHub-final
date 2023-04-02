@@ -36,7 +36,7 @@ export default function User() {
   return (
     <div className="user">
       
-      <div><b>Username: </b>{user.username} </div>
+      <div><b>Username: </b>{user.name} </div>
       <div><b>Email: </b>{user.email} </div>
 
       {/* {"  Email:  " + user.email} */}
@@ -56,7 +56,7 @@ export default function User() {
               className="userShowImg"
             />
             <div className="userShowTopTitle">
-              <span className="userShowUsername">{user.username}</span>
+              <span className="userShowUsername">{user.name}</span>
               {/* <span className="userShowUserTitle">Software Engineer</span> */}
             </div>
           </div>
@@ -64,7 +64,7 @@ export default function User() {
             <span className="userShowTitle">User</span>
             <div className="userShowInfo">
               <PermIdentity className="userShowIcon" />
-              <span className="userShowInfoTitle">{user.username}</span>
+              <span className="userShowInfoTitle">{user.name}</span>
             </div>
             <div className="userShowInfo">
               <CalendarToday className="userShowIcon" />
@@ -93,7 +93,7 @@ export default function User() {
                 <label>Username</label>
                 <input
                   type="text"
-                  placeholder={user.username}
+                  placeholder={user.name}
                   className="userUpdateInput"
                 />
               </div>

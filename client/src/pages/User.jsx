@@ -1,49 +1,44 @@
 import {
-    CalendarToday,
-    LocationSearching,
-    MailOutline,
-    PermIdentity,
-    PhoneAndroid,
-    Publish,
-  } from "@material-ui/icons";
-  import { Link } from "react-router-dom";
-  import "./user.css";
-  import { useLocation } from "react-router-dom";
-  import { useEffect, useState } from "react";
-  import Footer from "../components/Footer";
-  import Navbar from "../components/Navbar";
-  import Announcement from "../components/Announcement";
-//   import { publicRequest } from "../../requestMethods";
-import { publicRequest } from "../requestMethods";
-  import { useDispatch } from "react-redux";
-  
-  
-  export default function User() {
-    const location = useLocation();
-    const id = location.pathname.split("/")[2];
-    const [user, setUser] = useState({});
-    const dispatch = useDispatch();
-    
-    useEffect(() => {
-      const getUser = async () => {
-        try {
-          const res = await publicRequest.get("/users/find/" + id);
-          console.log(id);
-          console.log(res);
-  
-          setUser(res.data);
-        } catch {}
-      };
-  
-      getUser();
-    }, [id]);
-  
-    return (
-      <div><Navbar/>
-      <Announcement/>
+  CalendarToday,
+  LocationSearching,
+  MailOutline,
+  PermIdentity,
+  PhoneAndroid,
+  Publish,
+} from "@material-ui/icons";
+import { Link } from "react-router-dom";
+import "./user.css";
+import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
+import Announcement from "../components/Announcement";
+import { userRequest } from "../requestMethods";
+import { useDispatch } from "react-redux";
+
+
+export default function User() {
+  const location = useLocation();
+  const id = location.pathname.split("/")[2];
+  const [user, setUser] = useState({});
+  const dispatch = useDispatch();
+  const created = user?.createdAt?.slice(0, 10) ?? '';
+
+  const getUser = async () => {
+    try {
+      const res = await userRequest.get("/users/find/" + id);
+      setUser(res.data);
+    } catch { }
+  };
+
+  useEffect(() => {
+    getUser();
+  }, [id]);
+
+  return (
+    <div><Navbar />
+      <Announcement />
       <div className="user">
-        {/* {"  Email:  " + user.email} */}
-        <div></div>
         <div className="userTitleContainer">
           <h1 className="userTitle">Account Details</h1>
         </div>
@@ -51,29 +46,28 @@ import { publicRequest } from "../requestMethods";
           <div className="userShow">
             <div className="userShowTop">
               <img
-                src= {user.img || "https://crowd-literature.eu/wp-content/uploads/2015/01/no-avatar.gif"}
+                src={user.image || "https://crowd-literature.eu/wp-content/uploads/2015/01/no-avatar.gif"}
                 alt=""
                 className="userShowImg"
               />
               <div className="userShowTopTitle">
-                <span className="userShowUsername">{user.username}</span>
-                {/* <span className="userShowUserTitle">Software Engineer</span> */}
+                <span className="userShowUsername">{user.name}</span>
               </div>
             </div>
             <div className="userShowBottom">
               <span className="userShowTitle">User</span>
               <div className="userShowInfo">
                 <PermIdentity className="userShowIcon" />
-                <span className="userShowInfoTitle">{user.username}</span>
+                <span className="userShowInfoTitle">{user.name}</span>
               </div>
               <div className="userShowInfo">
                 <CalendarToday className="userShowIcon" />
-                <span className="userShowInfoTitle">{user.createdAt}</span>
+                <span className="userShowInfoTitle">{created}</span>
               </div>
               <span className="userShowTitle">Contact Details</span>
               <div className="userShowInfo">
                 <PhoneAndroid className="userShowIcon" />
-                <span className="userShowInfoTitle">+1 123 456 67</span>
+                <span className="userShowInfoTitle">{user.phone}</span>
               </div>
               <div className="userShowInfo">
                 <MailOutline className="userShowIcon" />
@@ -81,30 +75,22 @@ import { publicRequest } from "../requestMethods";
               </div>
               <div className="userShowInfo">
                 <LocationSearching className="userShowIcon" />
-                <span className="userShowInfoTitle">India</span>
+                <span className="userShowInfoTitle">{user.address}</span>
               </div>
             </div>
           </div>
           <div className="userUpdate">
-            <span className="userUpdateTitle">Account Details</span>
             <form className="userUpdateForm">
               <div className="userUpdateLeft">
+                <span className="userUpdateTitle">Account Details</span>
                 <div className="userUpdateItem">
-                  <label>Username</label>
+                  <label>Name</label>
                   <input
                     type="text"
-                    placeholder={user.username}
+                    placeholder={user.name}
                     className="userUpdateInput"
                   />
                 </div>
-                {/* <div className="userUpdateItem">
-                  <label>Full Name</label>
-                  <input
-                    type="text"
-                    placeholder="Anna Becker"
-                    className="userUpdateInput"
-                  />
-                </div> */}
                 <div className="userUpdateItem">
                   <label>Email</label>
                   <input
@@ -117,7 +103,7 @@ import { publicRequest } from "../requestMethods";
                   <label>Phone</label>
                   <input
                     type="text"
-                    placeholder="+1 123 456 67"
+                    placeholder={user.phone}
                     className="userUpdateInput"
                   />
                 </div>
@@ -125,33 +111,32 @@ import { publicRequest } from "../requestMethods";
                   <label>Address</label>
                   <input
                     type="text"
-                    placeholder="India"
+                    placeholder={user.address}
                     className="userUpdateInput"
                   />
                 </div>
               </div>
-              <div className="userUpdateRight">
-                <div className="userUpdateUpload">
-                  <img
-                    className="userUpdateImg"
-                    src= {user.img || "https://crowd-literature.eu/wp-content/uploads/2015/01/no-avatar.gif"}
-                    alt=""
-                  />
-                  <label htmlFor="file">
-                    <Publish className="userUpdateIcon" />
-                  </label>
-                  <form action="/upload" method="POST" enctype="multipart/form-data">
+            </form>
+            <div className="userUpdateRight">
+              <div className="userUpdateUpload">
+                <img
+                  className="userUpdateImg"
+                  src={user.image || "https://crowd-literature.eu/wp-content/uploads/2015/01/no-avatar.gif"}
+                  alt=""
+                />
+                <label htmlFor="file">
+                  <Publish className="userUpdateIcon" />
+                </label>
+                <form action="/upload" method="POST" enctype="multipart/form-data">
                   <input type="file" id="file" style={{ display: "none" }} />
                   <button type="submit" class="btn">Submit</button>
-                  </form>
+                </form>
               </div>
-              </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>
-      <Footer/>
-      </div>
-    );
-  }
-  
+      <Footer />
+    </div>
+  );
+}

@@ -43,7 +43,7 @@ export default function ContactList() {
         return (
           <div className="productListItem">
             {/* <img className="productListImg" src={params.row.img} alt="" /> */}
-            {params.row.username}
+            {params.row.name}
           </div>
         );
       },

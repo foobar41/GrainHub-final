@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 
 export default function Register() {
-  const username = useRef();
+  const name = useRef();
   const email = useRef();
   const password = useRef();
   const passwordAgain = useRef();
@@ -18,7 +18,7 @@ export default function Register() {
       passwordAgain.current.setCustomValidity("Passwords don't match!");
     } else {
       const user = {
-        username: username.current.value,
+        name: name.current.value,
         email: email.current.value,
         password: password.current.value,
       };
@@ -44,9 +44,9 @@ export default function Register() {
         <div className="loginRight">
           <form className="loginBox" onSubmit={handleClick}>
             <input
-              placeholder="Username"
+              placeholder="Name"
               required
-              ref={username}
+              ref={name}
               className="loginInput"
             />
             <input
