@@ -132,13 +132,14 @@ const Product = () => {
   const [size] = useState("");
   const dispatch = useDispatch();
 
+  const getProduct = async () => {
+    try {
+      const res = await publicRequest.get("/products/find/" + id);
+      setProduct(res.data);
+    } catch { }
+  };
+
   useEffect(() => {
-    const getProduct = async () => {
-      try {
-        const res = await publicRequest.get("/products/find/" + id);
-        setProduct(res.data);
-      } catch { }
-    };
     getProduct();
   }, [id]);
 
@@ -160,10 +161,16 @@ const Product = () => {
       addProduct({ ...product, id, quantity, color, size })
     );
 
-    // Make a POST request to update the product in the database
-    const updatedProduct = { ...product, in_stock: product.in_stock - quantity };
-    axios.put(`/api/products/${product._id}`, updatedProduct)
+    const updatedStock = product.in_stock - quantity;
+    axios.put(`http://localhost:5000/api/products/upd/${product._id}`, {
+      in_stock: updatedStock
+    }, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('userToken')}`
+      }
+    })
       .then(response => console.log(response))
+      .then(() => getProduct())
       .catch(error => console.log(error));
   };
   // const delClick = () => {

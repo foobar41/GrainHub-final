@@ -27,12 +27,16 @@ router.post("/", verifyToken, async (req, res) => {
 });
 
 //UPDATE
-router.put("/:id", verifyToken, async (req, res) => {
+router.put("/upd/:id", verifyToken, async (req, res) => {
   try {
+    const productId = req.params.id;
+    const updatedStock = req.body.in_stock;
     const updatedProduct = await Product.findByIdAndUpdate(
-      new ObjectId(req.params.id),
+      (productId),
       {
-        $set: req.body,
+        $set: {
+          in_stock: updatedStock
+        }
       },
       { new: true }
     );

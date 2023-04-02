@@ -10,6 +10,8 @@ import { useEffect, useState } from "react";
 import { publicRequest } from "../requestMethods";
 import { addProduct } from "../redux/cartRedux";
 import { useDispatch } from "react-redux";
+import axios from "axios";
+import React from "react";
 
 
 const Info = styled.div`
@@ -48,6 +50,7 @@ const Container = styled.div`
   &:hover ${Info}{
     opacity: 1;
   }
+  
 `;
 
 const TitleContainer = styled.div`
@@ -102,6 +105,7 @@ const Button = styled.button`
   }
 `;
 
+
 const ProductTile = ({ item }) => {
   const location = useLocation();
   const id = location.pathname.split("/")[2];
@@ -110,32 +114,49 @@ const ProductTile = ({ item }) => {
   const [color, setColor] = useState("");
   const [size] = useState("");
   const dispatch = useDispatch();
+  
+  const getProduct = async () => {
+    try {
+      const res = await publicRequest.get("/products/find/" + item._id);
+      setProduct(res.data);
+    } catch {}
+  };
 
   useEffect(() => {
-    const getProduct = async () => {
-      try {
-        const res = await publicRequest.get("/products/find/" + item._id);
-        setProduct(res.data);
-      } catch {}
-    };
     getProduct();
   }, [id]);
 
-  // const handleQuantity = (type) => {
-  //   if (type === "dec") {
-  //     quantity > 1 && setQuantity(quantity - 1);
-  //   } else {
-  //     setQuantity(quantity + 1);
-  //   }
-  // };
-
   const handleClick = () => {
-    alert('Product Added to Cart')
+    if (quantity > product.in_stock) {
+      alert(`Product out of stock\nOnly ${product.in_stock} left`)
+      return
+    }
+    alert('Product added to cart')
     dispatch(
       addProduct({ ...product, id, quantity, color, size })
     );
+
+    const updatedStock = product.in_stock - quantity;
+    axios.put(`http://localhost:5000/api/products/upd/${product._id}`, {
+      in_stock: updatedStock
+    }, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('userToken')}`
+      }
+    })
+      .then(response => console.log(response))
+      .then(() => getProduct())
+      .catch(error => console.log(error));
   };
+  
   return (
+    <React.Fragment>
+  {item.in_stock === 0 ? (
+    <Container style={{ opacity: 0.5 }}>
+      <Title>{item.name}</Title>
+      <Title>Out of stock</Title>
+    </Container>
+  ) : (
     <Container>
       <Circle />
       <Image src={item.image} />
@@ -154,6 +175,9 @@ const ProductTile = ({ item }) => {
         <Title>{item.price}/-</Title>
       </TitleContainer>
     </Container>
+  )}
+</React.Fragment>
+
   );
 };
 
