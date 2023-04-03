@@ -21,10 +21,12 @@ export default function User() {
   const location = useLocation();
   const id = location.pathname.split("/")[2];
   const [user, setUser] = useState({});
-  const [image, setImage] = useState("");
-  const dispatch = useDispatch();
+  const [image, setImage] = useState(null);
+  const [previewImage, setPreviewImage] = useState(null);
+  const [imageSrc, setImageSrc] = useState(null);
   const created = user?.createdAt?.slice(0, 10) ?? '';
-
+  const dp = user.image ? `../../../api/${user.image}`: null;
+  
   const getUser = async () => {
     try {
       const res = await userRequest.get("/users/find/" + id);
@@ -37,7 +39,7 @@ export default function User() {
     try {
       const formData = new FormData();
       formData.append("image", image);
-      const res = await axios.post(`http://localhost:5000/api/upload/${id}`, formData, {
+      const res = await axios.post(`http://localhost:5000/api/images/upload/${id}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -48,8 +50,24 @@ export default function User() {
     }
   };
 
+  const handleImageChange = (e) => {
+    const selectedImage = e.target.files[0];
+    setImage(selectedImage);
+    setPreviewImage(URL.createObjectURL(selectedImage));
+  };
+
+  const fetchImage = async () => {
+    try {
+      const res = await axios.get(`http://localhost:5000/api/images/fetch/${id}`);
+      setImageSrc(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getUser();
+    fetchImage();
   }, [id]);
 
   return (
@@ -63,7 +81,7 @@ export default function User() {
           <div className="userShow">
             <div className="userShowTop">
               <img
-                src={user.image || "https://crowd-literature.eu/wp-content/uploads/2015/01/no-avatar.gif"}
+                src={imageSrc || "https://crowd-literature.eu/wp-content/uploads/2015/01/no-avatar.gif"}
                 alt=""
                 className="userShowImg"
               />
@@ -138,8 +156,8 @@ export default function User() {
               <div className="userUpdateUpload">
                 <img
                   className="userUpdateImg"
-                  src={user.image || "https://crowd-literature.eu/wp-content/uploads/2015/01/no-avatar.gif"}
-                  alt=""
+                  src={previewImage || imageSrc || "https://crowd-literature.eu/wp-content/uploads/2015/01/no-avatar.gif"}
+                  alt="avatar"
                 />
                 <label htmlFor="file">
                   <Publish className="userUpdateIcon" />
@@ -149,7 +167,7 @@ export default function User() {
                     type="file"
                     id="file"
                     style={{ display: "none" }}
-                    onChange={(e) => setImage(e.target.files[0])} />
+                    onChange={handleImageChange} />
                   <button type="submit" class="btn">Submit</button>
                 </form>
               </div>
