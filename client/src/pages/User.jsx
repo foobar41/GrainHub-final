@@ -6,7 +6,6 @@ import {
   PhoneAndroid,
   Publish,
 } from "@material-ui/icons";
-import { Link } from "react-router-dom";
 import "./user.css";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -15,12 +14,14 @@ import Navbar from "../components/Navbar";
 import Announcement from "../components/Announcement";
 import { userRequest } from "../requestMethods";
 import { useDispatch } from "react-redux";
+import axios from "axios"
 
 
 export default function User() {
   const location = useLocation();
   const id = location.pathname.split("/")[2];
   const [user, setUser] = useState({});
+  const [image, setImage] = useState("");
   const dispatch = useDispatch();
   const created = user?.createdAt?.slice(0, 10) ?? '';
 
@@ -29,6 +30,22 @@ export default function User() {
       const res = await userRequest.get("/users/find/" + id);
       setUser(res.data);
     } catch { }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const formData = new FormData();
+      formData.append("image", image);
+      const res = await axios.post(`http://localhost:5000/api/upload/${id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log(res.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -127,8 +144,12 @@ export default function User() {
                 <label htmlFor="file">
                   <Publish className="userUpdateIcon" />
                 </label>
-                <form action="/upload" method="POST" enctype="multipart/form-data">
-                  <input type="file" id="file" style={{ display: "none" }} />
+                <form onSubmit={handleSubmit}>
+                  <input
+                    type="file"
+                    id="file"
+                    style={{ display: "none" }}
+                    onChange={(e) => setImage(e.target.files[0])} />
                   <button type="submit" class="btn">Submit</button>
                 </form>
               </div>

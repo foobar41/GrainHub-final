@@ -11,6 +11,8 @@ const orderRoute = require("./routes/order");
 const stripeRoute = require("./routes/stripe");
 const contactRoute = require("./routes/contact");
 const adminRoute = require("./routes/admin");
+const multerRoute = require("./middlewares/multer");
+
 const Product = require("./models/Product");
 
 // //Morgan Middleware
@@ -91,28 +93,29 @@ app.use("/api/orders", orderRoute);
 app.use("/api/checkout", stripeRoute);
 app.use("/api/contact", contactRoute);
 app.use("/api/admin", adminRoute);
+app.use("/api/upload", multerRoute);
 
-app.use('/upload-images', upload.array('image'), async (req, res) => {
-  if (req.method === 'POST') {
-    const urls = []
-    const files = req.files
-    for (const file of files) {
-      const { path } = file
-      const newPath = await uploader(path)
-      urls.push(newPath)
-      fs.unlinkSync(path)
-    }
-    res.status(200).json({
-      message: 'Images Uploaded Successfully',
-      data: urls
-    })
-  }
-  else {
-    res.status(405).json({
-      err: "Images not uploaded Successfully"
-    })
-  }
-});
+// app.use('/upload-images', upload.array('image'), async (req, res) => {
+//   if (req.method === 'POST') {
+//     const urls = []
+//     const files = req.files
+//     for (const file of files) {
+//       const { path } = file
+//       const newPath = await uploader(path)
+//       urls.push(newPath)
+//       fs.unlinkSync(path)
+//     }
+//     res.status(200).json({
+//       message: 'Images Uploaded Successfully',
+//       data: urls
+//     })
+//   }
+//   else {
+//     res.status(405).json({
+//       err: "Images not uploaded Successfully"
+//     })
+//   }
+// });
 
 
 app.listen(process.env.PORT || 5000, () => {
