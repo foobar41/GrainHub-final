@@ -25,7 +25,10 @@ export default function User() {
   const [previewImage, setPreviewImage] = useState(null);
   const [imageSrc, setImageSrc] = useState(null);
   const created = user?.createdAt?.slice(0, 10) ?? '';
-  const dp = user.image ? `../../../api/${user.image}`: null;
+  const [name, setName] = useState(user.name);
+  const [email, setEmail] = useState(user.email);
+  const [phone, setPhone] = useState(user.phone);
+  const [address, setAddress] = useState(user.address);
   
   const getUser = async () => {
     try {
@@ -34,7 +37,7 @@ export default function User() {
     } catch { }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmitImage = async (e) => {
     e.preventDefault();
     try {
       const formData = new FormData();
@@ -63,6 +66,26 @@ export default function User() {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleSubmitUser = async (e) => {
+    e.preventDefault();
+    const updatedUser = {
+      name,
+      email,
+      phone,
+      address,
+    };
+    userRequest
+      .put(`http://localhost:5000/api/users/update/${id}`, updatedUser)
+      .then((response) => {
+        console.log(response.data);
+        alert("User updated successfully.");
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("An error occurred while updating the user.");
+      });
   };
 
   useEffect(() => {
@@ -115,7 +138,7 @@ export default function User() {
             </div>
           </div>
           <div className="userUpdate">
-            <form className="userUpdateForm">
+            <form onSubmit={handleSubmitUser} className="userUpdateForm">
               <div className="userUpdateLeft">
                 <span className="userUpdateTitle">Account Details</span>
                 <div className="userUpdateItem">
@@ -124,6 +147,7 @@ export default function User() {
                     type="text"
                     placeholder={user.name}
                     className="userUpdateInput"
+                    onChange={(event) => setName(event.target.value)}
                   />
                 </div>
                 <div className="userUpdateItem">
@@ -132,6 +156,7 @@ export default function User() {
                     type="text"
                     placeholder={user.email}
                     className="userUpdateInput"
+                    onChange={(event) => setEmail(event.target.value)}
                   />
                 </div>
                 <div className="userUpdateItem">
@@ -140,6 +165,7 @@ export default function User() {
                     type="text"
                     placeholder={user.phone}
                     className="userUpdateInput"
+                    onChange={(event) => setPhone(event.target.value)}
                   />
                 </div>
                 <div className="userUpdateItem">
@@ -148,8 +174,10 @@ export default function User() {
                     type="text"
                     placeholder={user.address}
                     className="userUpdateInput"
+                    onChange={(event) => setAddress(event.target.value)}
                   />
                 </div>
+                <button type="submit" class="btn">Update</button>
               </div>
             </form>
             <div className="userUpdateRight">
@@ -162,7 +190,7 @@ export default function User() {
                 <label htmlFor="file">
                   <Publish className="userUpdateIcon" />
                 </label>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmitImage}>
                   <input
                     type="file"
                     id="file"

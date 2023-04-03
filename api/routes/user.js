@@ -8,7 +8,7 @@ const {
 const router = require("express").Router();
 
 //UPDATE
-router.put("/:id", verifyToken, async (req, res) => {
+router.put("/update/:id", verifyToken, async (req, res) => {
   
   // console.log(req);
   try {
