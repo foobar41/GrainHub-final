@@ -135,17 +135,6 @@ const ProductTile = ({ item }) => {
     dispatch(
       addProduct({ ...product, id, quantity, color, size })
     );
-
-    const updatedStock = product.in_stock - quantity;
-    axios.put(`http://localhost:5000/api/products/upd/${product._id}`, {
-      in_stock: updatedStock
-    }, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('userToken')}`
-      }
-    })
-      .then(() => getProduct())
-      .catch(error => console.log(error));
   };
   
   return (
