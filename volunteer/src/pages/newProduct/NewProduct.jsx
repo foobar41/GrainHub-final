@@ -1,9 +1,8 @@
 import { useState } from "react";
 import "./newProduct.css";
-import { addProduct } from "../../redux/apiCalls";
 import { useDispatch } from "react-redux";
+import { addProduct } from "../../redux/apiCalls"; // assuming this is defined in another file
 import { Link } from "react-router-dom";
-
 
 export default function NewProduct() {
   const [inputs, setInputs] = useState({});
@@ -16,19 +15,21 @@ export default function NewProduct() {
       return { ...prev, [e.target.name]: e.target.value };
     });
   };
+
   const handleCat = (e) => {
     setCat(e.target.value.split(","));
   };
 
-  const handleClick = (e) => {
+  const handleClick = async (e) => {
     e.preventDefault();
-    addProduct(product, dispatch);
-    const fileName = new Date().getTime() + file.name;
+    const product = {
+      title: inputs.title,
+      price: inputs.price,
+      categories: cat,
+      inStock: inputs.inStock,
+    };
+    await addProduct(product, file, dispatch); // assuming addProduct takes product and file as parameters
     alert("Product has been created successfully!");
-    // Register three observers:
-    // 1. 'state_changed' observer, called any time the state changes
-    // 2. Error observer, called on failure
-    // 3. Completion observer, called on successful completion
   };
 
   return (
@@ -63,18 +64,12 @@ export default function NewProduct() {
         </div>
         <div className="addProductItem">
           <label>Categories</label>
-          <input type="text" placeholder="Fruit, Vegetable" onChange={handleCat} />
+          <input
+            type="text"
+            placeholder="Fruit, Vegetable"
+            onChange={handleCat}
+          />
         </div>
-        {/* <div className="addProductItem">
-          <label>Color</label>
-          <select name="color" onChange={handleChange}>
-            <option value="red">Red</option>
-            <option value="orange">Orange</option>
-            <option value="pink">Pink</option>
-            <option value="black">Black</option>
-            <option value="brown">Brown</option>
-          </select>
-        </div> */}
         <div className="addProductItem">
           <label>Stock</label>
           <select name="inStock" onChange={handleChange}>
@@ -82,11 +77,9 @@ export default function NewProduct() {
             <option value="false">No</option>
           </select>
         </div>
-        {/* <Link to="/success"> */}
         <button onClick={handleClick} className="addProductButton">
           Create
         </button>
-        {/* </Link> */}
       </form>
     </div>
   );
