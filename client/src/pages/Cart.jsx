@@ -15,13 +15,11 @@ import { clearCart } from "../redux/apiCalls";
 import { delCart } from "../redux/cartRedux";
 import { updateQuantity } from "../redux/cartRedux";
 import { removeProduct } from "../redux/cartRedux";
-
 import { Link } from "react-router-dom";
-import { useLocation } from "react-router-dom";
-import { current } from "@reduxjs/toolkit";
+import axios from "axios";
 
 // import { useLocation } from "react-router-dom";
-// // import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 // import { userRequest } from "../requestMethods";
 // import { addProduct } from "../redux/cartRedux";
 // import { useDispatch } from "react-redux";
@@ -232,6 +230,71 @@ const Cart = () => {
     );
   };
 
+  const updateProductsQuantity = async () => {
+    console.log("Updating product quantities started")
+    try {
+      for (let i = 0; i < cart.products.length; i++) {
+        const product = cart.products[i];
+        const updatedStock = product.in_stock - product.quantity;
+
+        await axios.put(
+          `http://localhost:5000/api/products/update/${product._id}`,
+          {
+            in_stock: updatedStock
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("userToken")}`
+            }
+          }
+        );
+      }
+      console.log("Product quantities updated successfully");
+    } catch (error) {
+      console.log("Error updating product quantities: ", error);
+    }
+  };
+
+  // const processOrder = async () => {
+  //   console.log("order started")
+  //   try {
+  //     const res = await userRequest.post("http://localhost:5000/api/orders", {
+  //       products: cart.products,
+  //       userId: currentUser._id,
+  //       // tokenId: stripeToken.id,
+  //       address: stripeToken.card.address_line1 + " " + stripeToken.card.address_city + " " + stripeToken.card.address_zip,
+  //       amount: (cart.total - discount),
+  //     }, {
+  //       headers: {
+  //         Authorization: `Bearer ${currentUser.accessToken}`
+  //       }
+  //     });
+  //     history.push("/success/" + res.data._id, {
+  //       stripeData: res.data,
+  //       products: cart,
+  //     });
+  //     console.log("order done")
+  //     setOrderId(res);
+  //     await updateProductsQuantity()
+  //   } catch {
+  //     console.log("error processing order");
+  //   }
+  // }
+
+  // const makePayment = async () => {
+  //   console.log("payment started")
+  //   try {
+  //     await userRequest.post("http://localhost:5000/api/checkout/payment", {
+  //       tokenId: stripeToken.id,
+  //       amount: (cart.total - discount),
+  //     });
+  //     console.log("payment done")
+  //     await processOrder()
+  //   } catch {
+  //     console.log("error in payment");
+  //   }
+  // }
+
   const makeRequest = async () => {
     try {
       const res = await userRequest.post("http://localhost:5000/api/orders", {
@@ -250,10 +313,8 @@ const Cart = () => {
         products: cart,
       });
       setOrderId(res);
-      // console.log(res.data._id);
-      // console.log(stripeToken.card);
     } catch {
-      console.log("error here");
+      console.log("error processing order");
     }
     try {
       await userRequest.post("http://localhost:5000/api/checkout/payment", {
@@ -261,9 +322,11 @@ const Cart = () => {
         amount: (cart.total - discount),
       });
     } catch {
-      console.log("error here 2");
+      console.log("error in payment");
     }
-    clearCart(dispatch);
+    // clearCart(dispatch);
+    dispatch(delCart());
+    updateProductsQuantity();
   };
 
   useEffect(() => {
@@ -271,9 +334,20 @@ const Cart = () => {
   }, [cart, stripeToken, cart.total, history]);
 
   const handleQuantity = (type, prod) => {
-    const newQuantity = type === "dec" ? prod.quantity - 1 : prod.quantity + 1;
-    dispatch(updateQuantity({ name: prod.name, quantity: newQuantity }));
-  };
+    if (type === "dec") {
+      const newQuantity = prod.quantity - 1
+      dispatch(updateQuantity({ name: prod.name, quantity: newQuantity }));
+      return;
+    }
+    if (type === "inc" && prod.quantity + 1 <= prod.in_stock) {
+      const newQuantity = prod.quantity + 1
+      dispatch(updateQuantity({ name: prod.name, quantity: newQuantity }));
+      return;
+    } else {
+      alert(`Product out of stock\nOnly ${prod.in_stock} left`)
+      return;
+    }
+  }
 
   const handleDelProduct = (prod) => {
     dispatch(removeProduct({ name: prod.name }));
@@ -348,7 +422,7 @@ const Cart = () => {
               billingAddress
               shippingAddress
               description={"Your total is  ₹" + (cart.total - discount)}
-              amount={(cart.total - discount)*100}
+              amount={(cart.total - discount) * 100}
               token={onToken}
               stripeKey={KEY}
               currency="INR"
