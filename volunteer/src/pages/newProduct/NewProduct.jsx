@@ -7,27 +7,22 @@ import { Link } from "react-router-dom";
 export default function NewProduct() {
   const [inputs, setInputs] = useState({});
   const [file, setFile] = useState(null);
-  const [cat, setCat] = useState([]);
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
-    setInputs((prev) => {
-      return { ...prev, [e.target.name]: e.target.value };
-    });
-  };
-
-  const handleCat = (e) => {
-    setCat(e.target.value.split(","));
+    const { name, value } = e.target;
+    setInputs(prev => ({ ...prev, [name]: value }));
   };
 
   const handleClick = async (e) => {
     e.preventDefault();
     const product = {
       title: inputs.title,
-      price: inputs.price,
-      categories: cat,
-      inStock: inputs.inStock,
+      price: parseInt(inputs.price),
+      category: inputs.category,
+      inStock: parseInt(inputs.in_stock),
     };
+    // console.log(product)
     await addProduct(product, file, dispatch); // assuming addProduct takes product and file as parameters
     alert("Product has been created successfully!");
   };
@@ -50,7 +45,7 @@ export default function NewProduct() {
             name="title"
             type="text"
             placeholder="Mango..."
-            onChange={handleChange}
+            onChange={(e) => handleChange(e, "title")}
           />
         </div>
         <div className="addProductItem">
@@ -59,23 +54,26 @@ export default function NewProduct() {
             name="price"
             type="number"
             placeholder="100"
-            onChange={handleChange}
+            onChange={(e) => handleChange(e, "price")}
           />
         </div>
         <div className="addProductItem">
-          <label>Categories</label>
-          <input
-            type="text"
-            placeholder="Fruit, Vegetable"
-            onChange={handleCat}
-          />
-        </div>
-        <div className="addProductItem">
-          <label>Stock</label>
-          <select name="inStock" onChange={handleChange}>
-            <option value="true">Yes</option>
-            <option value="false">No</option>
+          <label>Category</label>
+          <select name="category" onChange={(e) => handleChange(e, "category")}>
+            <option value="">Select a category</option>
+            <option value="Fruit">Fruit</option>
+            <option value="Vegetable">Vegetable</option>
+            <option value="Grains">Grains</option>
           </select>
+        </div>
+        <div className="addProductItem">
+        <label>Stock</label>
+          <input
+            name="in_stock"
+            type="number"
+            placeholder="10"
+            onChange={(e) => handleChange(e, "in_stock")}
+          />
         </div>
         <button onClick={handleClick} className="addProductButton">
           Create

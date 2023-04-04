@@ -16,7 +16,6 @@ function App() {
   let volunteer = true;
   try{
     const volunteer1 = useSelector((state) => state.user.currentUser.isVolunteer);
-    console.log("hello" + volunteer1);
 
     volunteer = volunteer1;
   }
@@ -25,7 +24,6 @@ function App() {
     // volunteer = false;
   }
   // const volunteer = true;
-  console.log(volunteer);
   if (!volunteer){
     return (
       <Router>
