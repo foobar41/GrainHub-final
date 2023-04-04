@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import "./user.css";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { publicRequest } from "../../requestMethods";
+import { userRequest } from "../../requestMethods";
 import { useDispatch } from "react-redux";
 
 
@@ -19,12 +19,15 @@ export default function User() {
   const id = location.pathname.split("/")[2];
   const [user, setUser] = useState({});
   const dispatch = useDispatch();
+  const [name, setName] = useState(user.name);
+  const [email, setEmail] = useState(user.email);
+  const [phone, setPhone] = useState(user.phone);
+  const [address, setAddress] = useState(user.address);
   
   useEffect(() => {
     const getUser = async () => {
       try {
-        const res = await publicRequest.get("/users/find/" + id);
-        console.log(res);
+        const res = await userRequest.get("/users/find/" + id);
 
         setUser(res.data);
       } catch {}
@@ -32,6 +35,26 @@ export default function User() {
 
     getUser();
   }, [id]);
+
+  const handleUpdate = async (e) => {
+    e.preventDefault()
+    const updatedUser = {
+      name,
+      email,
+      phone,
+      address,
+    };
+    userRequest
+      .put(`http://localhost:5000/api/users/update/${id}`, updatedUser)
+      .then((response) => {
+        console.log(response.data);
+        alert("User updated successfully.");
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("An error occurred while updating the user.");
+      });
+  };
 
   return (
     <div className="user">
@@ -50,14 +73,8 @@ export default function User() {
       <div className="userContainer">
         <div className="userShow">
           <div className="userShowTop">
-            <img
-              src= {user.img || "https://crowd-literature.eu/wp-content/uploads/2015/01/no-avatar.gif"}
-              alt=""
-              className="userShowImg"
-            />
             <div className="userShowTopTitle">
               <span className="userShowUsername">{user.name}</span>
-              {/* <span className="userShowUserTitle">Software Engineer</span> */}
             </div>
           </div>
           <div className="userShowBottom">
@@ -73,7 +90,7 @@ export default function User() {
             <span className="userShowTitle">Contact Details</span>
             <div className="userShowInfo">
               <PhoneAndroid className="userShowIcon" />
-              <span className="userShowInfoTitle">+1 123 456 67</span>
+              <span className="userShowInfoTitle">{user.phone}</span>
             </div>
             <div className="userShowInfo">
               <MailOutline className="userShowIcon" />
@@ -81,7 +98,7 @@ export default function User() {
             </div>
             <div className="userShowInfo">
               <LocationSearching className="userShowIcon" />
-              <span className="userShowInfoTitle">India</span>
+              <span className="userShowInfoTitle">{user.address}</span>
             </div>
           </div>
         </div>
@@ -95,54 +112,39 @@ export default function User() {
                   type="text"
                   placeholder={user.name}
                   className="userUpdateInput"
+                  onChange={(event) => setName(event.target.value)}
                 />
               </div>
-              {/* <div className="userUpdateItem">
-                <label>Full Name</label>
-                <input
-                  type="text"
-                  placeholder="Anna Becker"
-                  className="userUpdateInput"
-                />
-              </div> */}
               <div className="userUpdateItem">
                 <label>Email</label>
                 <input
                   type="text"
                   placeholder={user.email}
                   className="userUpdateInput"
+                  onChange={(event) => setEmail(event.target.value)}
                 />
               </div>
               <div className="userUpdateItem">
                 <label>Phone</label>
                 <input
                   type="text"
-                  placeholder="+1 123 456 67"
+                  placeholder={user.phone}
                   className="userUpdateInput"
+                  onChange={(event) => setPhone(event.target.value)}
                 />
               </div>
               <div className="userUpdateItem">
                 <label>Address</label>
                 <input
                   type="text"
-                  placeholder="India"
+                  placeholder={user.address}
                   className="userUpdateInput"
+                  onChange={(event) => setAddress(event.target.value)}
                 />
               </div>
             </div>
             <div className="userUpdateRight">
-              <div className="userUpdateUpload">
-                <img
-                  className="userUpdateImg"
-                  src= {user.img || "https://crowd-literature.eu/wp-content/uploads/2015/01/no-avatar.gif"}
-                  alt=""
-                />
-                <label htmlFor="file">
-                  <Publish className="userUpdateIcon" />
-                </label>
-                <input type="file" id="file" style={{ display: "none" }} />
-              </div>
-              {/* <button className="userUpdateButton">Update</button> */}
+              <button onClick={handleUpdate} className="userUpdateButton">Update</button>
             </div>
           </form>
         </div>

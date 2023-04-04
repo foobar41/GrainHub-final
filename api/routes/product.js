@@ -32,7 +32,7 @@ router.put("/update/:id", verifyToken, async (req, res) => {
     const productId = req.params.id;
     const updatedStock = req.body.in_stock;
     const updatedProduct = await Product.findByIdAndUpdate(
-      (productId),
+      productId,
       {
         $set: {
           in_stock: updatedStock
@@ -41,6 +41,24 @@ router.put("/update/:id", verifyToken, async (req, res) => {
       { new: true }
     );
     res.status(200).json(updatedProduct);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// UPDATE ALL DETAILS OF A PRODUCT
+router.put("/updateAll/:id", verifyToken, async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const updatedProduct = req.body;
+    const updatedProductDetails = await Product.findByIdAndUpdate(
+      productId,
+      {
+        $set: updatedProduct
+      },
+      { new: true }
+    );
+    res.status(200).json(updatedProductDetails);
   } catch (err) {
     res.status(500).json(err);
   }

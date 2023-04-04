@@ -21,7 +21,7 @@ export default function ContactList() {
   useEffect(() => {
     const getUsers = async () => {
       try {
-        const res = await userRequest.get("contact/");
+        const res = await userRequest.get("http://localhost:5000/api/contact");
         // console.log(res);
         setContact(res.data);
       } catch {}

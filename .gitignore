@@ -1,4 +1,4 @@
 .vscode
 node_modules
-access_logs/*
-images/*
+access_logs
+images

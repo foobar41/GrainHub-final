@@ -59,12 +59,6 @@ export default function Sidebar() {
                 Orders
               </li>
             </Link>
-            <Link to="/transactions" className="link">
-              <li className="sidebarListItem">
-                <AttachMoney className="sidebarIcon" />
-                Transactions
-              </li>
-            </Link>
             
           </ul>
         </div>

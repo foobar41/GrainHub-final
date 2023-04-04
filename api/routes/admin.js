@@ -4,6 +4,7 @@ const CryptoJS = require("crypto-js");
 const jwt = require("jsonwebtoken");
 const {
     verifyToken,
+    verifyTokenAndAdmin,
     verifyTokenAndAuthorization,
 } = require("./verifyToken");
 
@@ -40,7 +41,7 @@ router.post("/login", async (req, res) => {
 });
 
 // Protected route
-router.get('/me', verifyToken, (req, res) => {
+router.get('/me', verifyTokenAndAdmin, (req, res) => {
     const user = req.user;
     res.status(200).json({ user });
 });

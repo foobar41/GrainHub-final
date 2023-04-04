@@ -23,10 +23,7 @@ export default function Contact() {
   useEffect(() => {
     const getContact = async () => {
       try {
-        const res = await publicRequest.get("/contact/find/" + id);
-        console.log(res.data);
-        console.log(id);
-
+        const res = await publicRequest.get("http://localhost:5000/api/contact/find/" + id);
         setContact(res.data);
       } catch {}
     };
