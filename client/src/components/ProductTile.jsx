@@ -127,7 +127,7 @@ const ProductTile = ({ item }) => {
   }, [id]);
 
   const handleClick = () => {
-    if (quantity > product.in_stock) {
+    if (quantity+1 > product.in_stock) {
       alert(`Product out of stock\nOnly ${product.in_stock} left`)
       return
     }
@@ -135,6 +135,7 @@ const ProductTile = ({ item }) => {
     dispatch(
       addProduct({ ...product, id, quantity, color, size })
     );
+    getProduct()
   };
   
   return (

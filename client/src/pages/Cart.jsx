@@ -249,7 +249,6 @@ const Cart = () => {
           }
         );
       }
-      clearCart(dispatch);
       console.log("Product quantities updated successfully");
     } catch (error) {
       console.log("Error updating product quantities: ", error);
@@ -325,8 +324,9 @@ const Cart = () => {
     } catch {
       console.log("error in payment");
     }
-    updateProductsQuantity();
     // clearCart(dispatch);
+    dispatch(delCart());
+    updateProductsQuantity();
   };
 
   useEffect(() => {
