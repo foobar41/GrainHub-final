@@ -18,7 +18,9 @@ const OrderSchema = new mongoose.Schema(
     address: { type: Object },
     status: { type: String, default: "pending" },
   },
-  { timestamps: true }
+  { timestamps: {
+    currentTime: () => new Date().toLocaleString("en-US", { timeZone: "Asia/Kolkata" })
+  } }
 );
 
 module.exports = mongoose.model("Order", OrderSchema);
