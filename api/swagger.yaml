@@ -8,6 +8,8 @@ tags:
   description: "Everything about Authorization"
 - name: "User"
   description: "Everything about User Details"
+- name: "Order"
+  description: "Everything about Order Details"
 - name: "Contact"
   description: "Everything about Contact Details"
 
@@ -180,6 +182,79 @@ paths:
             $ref: "#/definitions/User"
         "500":
           description: "Invalid Operation" 
+
+# ORDER ROUTES           
+  /api/orders/:
+    get:
+      tags:
+      - "Order"
+      summary: "Get all order details"
+      description: "Get all orders"
+      # operationId: "getUserByName"
+      produces:
+      - "application/json"
+      parameters: []
+      security:
+      - BearerAuth: []
+      securityDefinitions:
+      BearerAuth:
+        type: apiKey
+        name: Authorization
+        in: header
+
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/Order"
+        "500":
+          description: "Error performing the operation"          
+
+
+# Product ROUTES
+  /api/products:
+    get:
+      tags:
+      - "Contact"
+      summary: "Get all contact details"
+      description: "Get All contacts"
+      # operationId: "getUserByName"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/Contact"
+        "500":
+          description: "Error performing the operation"
+  /api/products/find/{id}:
+    get:
+      tags:
+      - "Products"
+      summary: "Get product details by ID"
+      description: "Get product details by ID"
+      # operationId: "getUserByName"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "The contact details that needs to be fetched by contactID "
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/Contact"
+        "400":
+          description: "Invalid contactID supplied"
+        "404":
+          description: "Contact not found"
+        "500":
+          description: "Error performing the operation"
 
 # CONTACT ROUTES
   /api/contact:

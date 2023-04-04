@@ -3,6 +3,7 @@ import "./newProduct.css";
 import { useDispatch } from "react-redux";
 import { addProduct } from "../../redux/apiCalls"; // assuming this is defined in another file
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 export default function NewProduct() {
   const [inputs, setInputs] = useState({});
@@ -17,13 +18,24 @@ export default function NewProduct() {
   const handleClick = async (e) => {
     e.preventDefault();
     const product = {
+      image: inputs.link,
       title: inputs.title,
       price: parseInt(inputs.price),
       category: inputs.category,
       inStock: parseInt(inputs.in_stock),
     };
+    const headers = {
+      Authorization: `Bearer ${localStorage.getItem("userToken")}`,
+    };
     // console.log(product)
-    await addProduct(product, file, dispatch); // assuming addProduct takes product and file as parameters
+    // await addProduct(product, file, dispatch); // assuming addProduct takes product and file as parameters
+    try {
+      const response = await axios.post("http://localhost:5000/api/products", product, {headers});
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
     alert("Product has been created successfully!");
   };
 
@@ -32,11 +44,12 @@ export default function NewProduct() {
       <h1 className="addProductTitle">New Product</h1>
       <form className="addProductForm">
         <div className="addProductItem">
-          <label>Image</label>
+          <label>Image Link</label>
           <input
-            type="file"
-            id="file"
-            onChange={(e) => setFile(e.target.files[0])}
+            name="link"
+            type="text"
+            placeholder="Image URL..."
+            onChange={(e) => handleChange(e, "link")}
           />
         </div>
         <div className="addProductItem">

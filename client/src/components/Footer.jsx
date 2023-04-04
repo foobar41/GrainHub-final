@@ -101,17 +101,17 @@ const Footer = () => {
         </Desc>
         <SocialContainer>
           <SocialIcon color="3B5999">
-            <Facebook onClick={()=>{window.open('https://www.facebook.com/Green.Grocery.30/', '_blank');}}/>
+            <Facebook onClick={()=>{window.open('https://www.facebook.com/GrainHub/', '_blank');}}/>
           </SocialIcon>
           <SocialIcon color="E4405F">
           {/* <Link <Instagram /></Link> */}
-          <Instagram onClick={()=>{window.open('https://www.instagram.com/green_grocery_30/', '_blank');}}/>
+          <Instagram onClick={()=>{window.open('https://www.instagram.com/GrainHub/', '_blank');}}/>
           </SocialIcon>
           <SocialIcon color="55ACEE">
-            <Twitter onClick={()=>{window.open('https://twitter.com/GreenGrocery30', '_blank');}}/>
+            <Twitter onClick={()=>{window.open('https://twitter.com/GrainHub', '_blank');}}/>
           </SocialIcon>
           <SocialIcon color="000000">
-            <GitHub onClick={()=>{window.open('https://github.com/fsd30/Green-Grocery', '_blank');}} />
+            <GitHub onClick={()=>{window.open('https://github.com/GrainHub', '_blank');}} />
           </SocialIcon>
         </SocialContainer>
       </Left>
