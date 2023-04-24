@@ -20,5 +20,6 @@ const cache = async (req, res, next) => {
   };
 
 module.exports = {
+  redis,
   cache,
 };

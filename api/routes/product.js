@@ -7,13 +7,11 @@ const {
 } = require("./verifyToken");
 
 const {
+  redis,
   cache,
 } = require("./redisCache");
 
 const router = require("express").Router();
-
-const Redis = require('ioredis');
-const redis = new Redis();
 
 //CREATE
 router.post("/", verifyToken, async (req, res) => {
