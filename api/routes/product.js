@@ -1,11 +1,12 @@
 const Product = require("../models/Product");
-const ObjectId = require('mongoose').Types.ObjectId;
 
 const {
   verifyToken,
   verifyTokenAndAuthorization,
   verifyTokenAndAdmin,
 } = require("./verifyToken");
+
+const { cache } = require("./redisCache");
 
 const router = require("express").Router();
 
@@ -85,7 +86,7 @@ router.get("/find/:id", async (req, res) => {
 });
 
 //GET PRODUCT BY CATEGORY
-router.get("/findCat/:category", async (req, res) => {
+router.get("/findCat/:category", cache, async (req, res) => {
   try {
     const product = await Product.find({category: req.params.category});
     res.status(200).json(product);
@@ -95,7 +96,7 @@ router.get("/findCat/:category", async (req, res) => {
 });
 
 //GET ALL PRODUCTS
-router.get("/", async (req, res) => {
+router.get("/", cache, async (req, res) => {
   const qNew = req.query.new;
   const qCategory = req.query.category;
   try {
