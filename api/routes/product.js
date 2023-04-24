@@ -6,9 +6,14 @@ const {
   verifyTokenAndAdmin,
 } = require("./verifyToken");
 
-const { cache } = require("./redisCache");
+const {
+  cache,
+} = require("./redisCache");
 
 const router = require("express").Router();
+
+const Redis = require('ioredis');
+const redis = new Redis();
 
 //CREATE
 router.post("/", verifyToken, async (req, res) => {
@@ -85,35 +90,46 @@ router.get("/find/:id", async (req, res) => {
   }
 });
 
-//GET PRODUCT BY CATEGORY
+//GET PRODUCT BY CATEGORY - Original function
+// router.get("/findCat/:category", cache, async (req, res) => {
+//   try {
+//     const products = await Product.find({category: req.params.category});
+//     res.status(200).json(products);
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+// });
+
+//GET PRODUCT BY CATEGORY - Redis cache function
 router.get("/findCat/:category", cache, async (req, res) => {
   try {
-    const product = await Product.find({category: req.params.category});
-    res.status(200).json(product);
+    const cacheKey = req.originalUrl;
+    const products = await Product.find({category: req.params.category});
+    // console.log('Data not found in cache!');
+    await redis.set(cacheKey, JSON.stringify(products), 'EX', 3600);
+    res.status(200).json(products);
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
-//GET ALL PRODUCTS
-router.get("/", cache, async (req, res) => {
-  const qNew = req.query.new;
-  const qCategory = req.query.category;
+//GET ALL PRODUCTS - Original function
+// router.get("/", async (req, res) => {
+//   try {
+//     const products = await Product.find();
+//     res.status(200).json(products);
+//   } catch (err) {
+//     res.status(500).json(err);
+//   }
+// });
+
+//GET ALL PRODUCTS - Redis cache function
+router.get("/", cache, async (req, res, next) => {
   try {
-    let products;
-
-    if (qNew) {
-      products = await Product.find().sort({ createdAt: -1 }).limit(1);
-    } else if (qCategory) {
-      products = await Product.find({
-        categories: {
-          $in: [qCategory],
-        },
-      });
-    } else {
-      products = await Product.find();
-    }
-
+    const cacheKey = req.originalUrl;
+    const products = await Product.find();
+    await redis.set(cacheKey, JSON.stringify(products), 'EX', 3600);
+    // console.log('Data not found in cache!');
     res.status(200).json(products);
   } catch (err) {
     res.status(500).json(err);

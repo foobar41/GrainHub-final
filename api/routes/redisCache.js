@@ -3,25 +3,21 @@ const redis = new Redis();
 
 // Middleware for caching
 const cache = async (req, res, next) => {
-  const cacheKey = req.originalUrl;
-
-  try {
-    if (!redis.status === 'ready') {
-      await redis.connect();
-    }
-
+    const cacheKey = req.originalUrl;
     const data = await redis.get(cacheKey);
-
-    if (data !== null) {
-      res.status(200).json(JSON.parse(data));
-    } else {
+  
+    try {
+      if (data !== null) {
+        // console.log('Data found in cache!');
+        res.status(200).json(JSON.parse(data));
+      } else {
+        next();
+      }
+    } catch (err) {
+      console.error(err);
       next();
     }
-  } catch (err) {
-    console.error(err);
-    next();
-  }
-};
+  };
 
 module.exports = {
   cache,
