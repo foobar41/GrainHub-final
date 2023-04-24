@@ -16,5 +16,5 @@ jobs:
       with:
         node-version: '16.14.0'
     - run: npm install
-    - run: yarn start    
+    - run: yarn
     - run: npm test
