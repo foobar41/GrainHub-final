@@ -10,7 +10,7 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions
+    - uses: actions/checkout@v2
     - name: Use Node.js 16.14.0
       uses: actions/setup-node@v1
       with:
