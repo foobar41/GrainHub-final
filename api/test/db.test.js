@@ -1,8 +1,6 @@
-const { redis } = require('../routes/redisCache');
 const { expect } = require('chai');
 const axios = require('axios');
 
-const cacheKey = '/';
 const id = "642565b5511d371f6ef9120b"
 const data = {
   "_id": "642565b5511d371f6ef9120b",
@@ -16,10 +14,17 @@ const data = {
 };
 
 describe('GET /', () => {
-  it('should return cached data if present', async () => {
+  it('should return products from database if present', async () => {
 
+    // Make request to route
+    const res = await axios.get(`http://localhost:5000/api/products`)
 
-    await redis.set(cacheKey, JSON.stringify(data), 'EX', 60);
+    // Check that cached data was returned
+    expect(res.status).to.equal(200);
+    expect(res.data).to.be.an('array').that.is.not.empty;
+  });
+
+  it('should return product with given id', async () => {
 
     // Make request to route
     const res = await axios.get(`http://localhost:5000/api/products/find/${id}`)
@@ -27,17 +32,5 @@ describe('GET /', () => {
     // Check that cached data was returned
     expect(res.status).to.equal(200);
     expect(res.data).to.deep.equal(data);
-  });
-
-  it('should return fresh data if not present in cache', async () => {
-    // Clear cache
-    await redis.del('/');
-
-    // Make request to route
-    const res = await axios.get(`http://localhost:5000/api/products/find/${id}`)
-
-    // Check that fresh data was returned
-    expect(res.status).to.equal(200);
-    expect(res.data).to.be.an('object').that.is.not.empty;
   });
 });
