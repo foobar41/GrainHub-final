@@ -1,5 +1,8 @@
 const Redis = require('ioredis');
-const redis = new Redis();
+const redis = new Redis({
+  host: 'grainhub-final-redis-1',
+  port: 6379,
+});
 
 // Middleware for caching
 const cache = async (req, res, next) => {

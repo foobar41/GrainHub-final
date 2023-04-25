@@ -1,0 +1,52 @@
+version: '3.9'
+
+services:
+  api:
+    build: ./api
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongo
+      - redis
+    environment:
+      - MONGO_URI=mongodb://grainhub-final-mongo-1:27017/grainhub
+      - REDIS_URI=redis://grainhub-final-redis-1:6739
+
+  client:
+    build: ./client
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+
+  admin:
+    build: ./admin
+    ports:
+      - "3001:3001"
+    depends_on:
+      - api
+      - client
+
+  volunteer:
+    build: ./volunteer
+    ports:
+      - "3002:3002"
+    depends_on:
+      - api
+      - client
+      - admin
+
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  redis:
+    image: redis
+    ports:
+      - "6739:6739"
+
+volumes:
+  mongo-data:

@@ -44,7 +44,7 @@ mongoose
 
     const count = await Product.countDocuments();
     if (count === 0) {
-      const filePath = path.join(__dirname, '../products.json');
+      const filePath = path.join(__dirname, './products.json');
       const jsonData = fs.readFileSync(filePath, { encoding: 'utf8' });
       const products = JSON.parse(jsonData);
 
